@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ConGraph Chat with Node.js</title>
+    <title>ConGraph</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/layout.css" />
     <script src="socket.io/socket.io.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/index.js"></script>
 </head>
 <body>
-<header>ConGraph Chat - TEST <a>powered by  NodeCode</a></header>
-<ul id="content"></ul>
-<footer>
-    <input id="name" type="text" placeholder="dein Name" />
-    <input id="text" type="text" placeholder="schreibe etwas..." />
-    <input id="senden" type="submit" class="btn" value="senden" />
-</footer>
+<header>ConGraph <a>powered by NoteJS</a></header>
+
+
+<aside>
+    
+    <div class="chatTitle">
+        <h1>CHAT</h1>
+        <input id="name" type="text" placeholder="dein Name" />
+        <input id="text" type="text" placeholder="schreibe etwas..." />
+        <input id="senden" type="submit" class="btn" value="senden" />
+    </div>
+    <div class="chatList">
+        <ul id="content"></ul>
+        <br>
+        <br>
+    </div>
+
+</aside>
+
+<section>
+    <h1>
+        TEST
+    </h1>
+    <p>
+        das ist ein TEST
+    </p>
+</section>
+
+
+
 </body>
 </html>

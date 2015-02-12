@@ -8,7 +8,7 @@ $(document).ready(function(){
     socket.on('chat', function (data) {
         var zeit = new Date(data.zeit);
         $('#content').append(
-            $('<li></li>').append(
+            $('<p></p>').append(
                 // Uhrzeit
                 $('<span>').text('[' +
                     (zeit.getHours() < 10 ? '0' + zeit.getHours() : zeit.getHours())
@@ -22,7 +22,7 @@ $(document).ready(function(){
                 $('<span>').text(data.text))
         );
         // nach unten scrollen
-        $('body').scrollTop($('body')[0].scrollHeight);
+        $('.chatList').scrollTop($('.chatList')[0].scrollHeight);
     });
     // Nachricht senden
     function senden(){

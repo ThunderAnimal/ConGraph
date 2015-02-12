@@ -1,0 +1,36 @@
+
+section{
+    padding-right: 250px;
+}
+aside {
+    z-index: 1000;
+    position: fixed;
+    right: 400px;
+    width: 400px;
+    height: 100%;
+    margin-right: -400px;
+    margin-top: 28px;
+    background: #f6f6f6;
+    -webkit-box-shadow: 5px 0 20px 0px #888;
+    -moz-box-shadow: 5px 0 20px 0px #888;
+    box-shadow: 5px 0 20px 0px #888;
+}
+.chatTitle{
+    position: fixed;
+    right: 400px;
+    width: 400px;
+    height: auto;
+    bottom: 400px;
+    margin-right: -400px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+.chatList{
+    position: fixed;
+    right: 400px;
+    width: 400px;
+    height: 400px;
+    bottom: 0px;
+    margin-right: -400px;
+    overflow-y: auto;
+}
