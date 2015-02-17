@@ -1,11 +1,11 @@
 //------------------ Usings Modules ----------------
-var express = require('express')
-    ,   app = express()
-    ,   server = require('http').createServer(app)
-    ,   io = require('socket.io').listen(server)
-    ,   conf = require('./config.json');
-
-
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server)
+var mail = require('./server/mail.js');
+var db = require('./server/dbAgent.js');
+var conf = require('./config.json');
 
 //------------------ Middleware ----------------
 app.use(express.static(__dirname + '/public'));
@@ -13,13 +13,18 @@ app.use(express.static(__dirname + '/public'));
 //------------------ Routing ----------------
 //Auf Index Html navigiren
 app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/public/page/login.html');
+    res.sendFile(__dirname + '/public/page/login.html');
 });
 
 
 //Send Regstrie Mail
-app.get('/sendRegistMail', function(req, res){
+app.get('/sendRegistMail', function(req, rs){
+    mail.sendRegistMail(req,rs);
+});
 
+//Send Forgot PW Mail
+app.get('/sendForgotPWMail', function(req, rs){
+    mail.sendForgotPWMail(req,rs);
 });
 
 //------------------ Websocket ----------------
