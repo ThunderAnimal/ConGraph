@@ -7,28 +7,61 @@ header, footer{
     right: 0;
     bottom: auto;
     padding: 0 0.5em;
-    background-color: #bcbac8;
+    background-color: #3248c8;
     font-size: 24px;
     line-height: 2em;
     height: 2em;
     color: #fff;
 }
 header{
+    height: 3em;
     font-weight: bold;
 }
 header > a:last-child{
     float: right;
     color: #fff;
     font-weight: normal;
+    font-size: 20px;
 }
 footer{
     top: auto;
     bottom: 0;
 }
-input{
-    height: 1.5em;
-    font-size: 14px;
+
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #ddd;
 }
-#content{
-    list-style: none;
+#login{
+    padding-top: 100px;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 100px;
+    margin: 0 auto;
+    -webkit-box-shadow: 0px 0px 20px 15px rgba(0,0,0,0.24);
+    -moz-box-shadow: 0px 0px 20px 15px rgba(0,0,0,0.24);
+    box-shadow: 0px 0px 20px 15px rgba(0,0,0,0.24);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 20px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
 }
