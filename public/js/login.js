@@ -4,12 +4,22 @@
 $(document).ready(function(){
     $('#sendPWForgotMail').click(function(){
         var to = $('#inputPWForgotMail').val();
-        $.get('http://localhost:80/sendForgotPWMail', {email: to}, function(data){
+        $.post('../sendForgotPWMail', {email: to}, function(data){
             if(data == 'sent'){
                 alert('Mail versendet');
             }
             else{
                 alert('error');
+            }
+        });
+    });
+    $('#btnKontoErstellen').click(function(){
+        $.post('../newUser', {email: 'martinweber.93@outlook.com', name: 'ThunderAnimal', pw: '12345678'}, function(data){
+            if(data == 'success'){
+                alert('User angelegt');
+            }
+            else{
+                alert('Fehler beim Anlegen beim User');
             }
         });
     });

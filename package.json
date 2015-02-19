@@ -1,10 +1,17 @@
 {
-  "name": "Node.js-Chat",
-  "description": "Ein einfacher Chat mit Node.js",
-  "author": "NodeCode.de",
+  "name": "ConGraph",
+  "description": "ConGraph",
+  "author": "Diana, Denny, Martin",
   "dependencies" : {
-    "express": "3.x",
-    "nodemailer": "~0.7.1",
-    "socket.io": "*"
+    "express": "*",
+    "nodemailer": "0.7.1",
+    "socket.io": "*",
+    "body-parser": "*",
+    "mongoose":"*",
+    "cookie-parser": "*",
+    "bcrypt-nodejs" : "latest",
+    "morgan": "*",
+    "serve-favicon": "*",
+    "ejs": "*"
   }
 }

@@ -3,18 +3,13 @@
  */
 //Configuration SMTP
 var nodemailer = require('nodemailer');
-var smtpTransport = nodemailer.createTransport("SMTP",{
-    service: 'Gmail',
-    auth: {
-        user: 'martinweber.9393@gmail.com',
-        pass: 'muhkuh2149'
-    }
-});
+var configMail = require('../config/mail.js');
+var smtpTransport = nodemailer.createTransport("SMTP",configMail);
 
 
 exports.sendRegistMail = function(req, rs){
     var mailOption = {
-        to: req.query.email,
+        to: req.body.email,
         subject: "Registrierung ConGraph",
         text: "Erfolgreich bei ConGraph Registriert"
     };
@@ -33,7 +28,7 @@ exports.sendRegistMail = function(req, rs){
 };
 exports.sendForgotPWMail = function(req, rs){
     var mailOption = {
-        to: req.query.email,
+        to: req.body.email,
         subject: "GonGraph - Passwort Vergessen",
         text: "neues Passwort ist folgendes: ..."
     };
@@ -41,7 +36,6 @@ exports.sendForgotPWMail = function(req, rs){
     //TODO generate new PW
     smtpTransport.sendMail(mailOption, function(error, response){
         if(error){
-            console.log(error);
             rs.send("error");
         }else{
             console.log("Message sent: " + response.message);
