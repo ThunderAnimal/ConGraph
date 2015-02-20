@@ -23,4 +23,16 @@ $(document).ready(function(){
             }
         });
     });
+    $('#btnSignIn').click(function(){
+        var name = $('#flnUser').val();
+        var pw = $('#flnPass').val();
+        $.post('../login', {name: name, pw: pw}, function(data){
+            if(data !== 'success'){
+                alert('Benutzername oder Passwort Falsch');
+            }
+            else{
+                window.location.href='../home';
+            }
+        });
+    });
 });

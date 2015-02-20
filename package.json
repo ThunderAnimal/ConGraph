@@ -12,6 +12,7 @@
     "bcrypt-nodejs" : "latest",
     "morgan": "*",
     "serve-favicon": "*",
-    "ejs": "*"
+    "ejs": "*",
+    "express-session": "*"
   }
 }

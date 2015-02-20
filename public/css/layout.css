@@ -1,6 +1,6 @@
 
 section{
-    padding-right: 250px;
+    padding-right: 400px;
 }
 aside {
     z-index: 1000;
@@ -9,7 +9,7 @@ aside {
     width: 400px;
     height: 100%;
     margin-right: -400px;
-    margin-top: 28px;
+    margin-top: 25px;
     background: #f6f6f6;
     -webkit-box-shadow: 5px 0 20px 0px #888;
     -moz-box-shadow: 5px 0 20px 0px #888;

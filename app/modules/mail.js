@@ -3,7 +3,7 @@
  */
 //Configuration SMTP
 var nodemailer = require('nodemailer');
-var configMail = require('../config/mail.js');
+var configMail = require('../../config/mail.js');
 var smtpTransport = nodemailer.createTransport("SMTP",configMail);
 
 
@@ -34,8 +34,10 @@ exports.sendForgotPWMail = function(req, rs){
     };
 
     //TODO generate new PW
+
     smtpTransport.sendMail(mailOption, function(error, response){
         if(error){
+            console.error.bind(console, 'Mail send error: ')
             rs.send("error");
         }else{
             console.log("Message sent: " + response.message);
