@@ -47,22 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./app/routes.js')(app);
 
 // websocket ===================================================================
-
-//Der Client ist Verbunden
-io.sockets.on('connection', function (socket) {
-
-    // Chat -----------------------
-    socket.emit('chat', { zeit: new Date(), text: 'Du bist nun mit dem Server verbunden!' });
-    // wenn ein Benutzer einen Text senden
-    socket.on('chat', function (data) {
-        // so wird dieser Text an alle anderen Benutzer gesendet
-        io.sockets.emit('chat', { zeit: new Date(), name: data.name || 'Anonym', text: data.text });
-    });
-
-    // NEW -----------------------
-});
-
-//require('./app/websocket')(io);
+require('./app/websocket')(io);
 
 // launch ======================================================================
 server.listen(configServer.port);
