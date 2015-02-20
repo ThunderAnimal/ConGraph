@@ -33,10 +33,6 @@ body {
     padding-bottom: 40px;
     background-color: #ddd;
 }
-#login{
-    padding-top: 100px;
-}
-
 .form-signin {
     max-width: 330px;
     padding-top: 25px;
