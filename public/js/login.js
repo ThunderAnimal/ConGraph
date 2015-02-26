@@ -9,17 +9,17 @@ $(document).ready(function(){
                 alert('Mail versendet');
             }
             else{
-                alert('error');
+                alert(data);
             }
         });
     });
-    $('#btnKontoErstellen').click(function(){
-        $.post('../newUser', {email: 'martinweber.93@outlook.com', name: 'ThunderAnimal', pw: '12345678'}, function(data){
+    $('#sendRegister').click(function(){
+        $.post('../newUser', {email: $('#inputRegisterMail').val(), name: $('#inputRegisterName').val(), pw: $('#inputRegisterPW').val()}, function(data){
             if(data == 'success'){
                 alert('User angelegt');
             }
             else{
-                alert('Fehler beim Anlegen beim User');
+                alert(data);
             }
         });
     });

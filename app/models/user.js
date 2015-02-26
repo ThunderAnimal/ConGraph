@@ -29,16 +29,6 @@ userSchema.methods.validPassword = function(password) {
 module.exports = mongoose.model('User', userSchema);
 
 //exports.addUser = function(req, rs){
-//    var newUser = new User({
-//        email: req.body.email,
-//        name: req.body.name,
-//        pw: req.body.pw,
-//        aktiv: false });
-//    newUser.save(function(err, user){
-//        if(err){
-//            rs.send('error');
-//        }else{
-//            rs.send('success');
-//        }
+
 //    });
 //}

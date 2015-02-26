@@ -2,7 +2,7 @@
  * Created by martin_w on 18.02.2015.
  */
 var mail = require('../app//modules/mail.js');
-var login = require('../app/modules/login.js');
+var userManager = require('../app/modules/userManager.js');
 var session;
 // app/routes.js
 module.exports = function(app){
@@ -22,7 +22,7 @@ module.exports = function(app){
         res.render('login');
     });
     app.post('/login', function(req, res){
-       login.checkLogin(req,res,session);
+       userManager.checkLogin(req,res,session);
     });
 
     //Send Regstrie Mail
@@ -32,12 +32,16 @@ module.exports = function(app){
 
     //Send Forgot PW Mail
     app.post('/sendForgotPWMail', function(req, rs){
-        mail.sendForgotPWMail(req,rs);
+       userManager.forgetPass(req,rs);
     });
 
     //New User
     app.post('/newUser', function(req, rs){
-        user.addUser(req,rs);
+        userManager.addUser(req,rs);
+        //TODO addUser anpassen
+    });
+    app.get('/act', function(req, rs){
+        userManager.activateUser(req,rs);
     });
 
     // =====================================

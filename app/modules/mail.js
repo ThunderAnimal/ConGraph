@@ -7,11 +7,14 @@ var configMail = require('../../config/mail.js');
 var smtpTransport = nodemailer.createTransport("SMTP",configMail);
 
 
-exports.sendRegistMail = function(req, rs){
+exports.sendRegistMail = function(user){
+    var text = "Erfolgreich bei ConGraph Registriert \n" +
+            "Aktivierung über folgenden Link: \n" +
+            "http://congraph.de/act?id=" + user._id
     var mailOption = {
-        to: req.body.email,
+        to: user.email,
         subject: "Registrierung ConGraph",
-        text: "Erfolgreich bei ConGraph Registriert"
+        text: text
     };
 
     //TODO generet RegLink
@@ -19,18 +22,16 @@ exports.sendRegistMail = function(req, rs){
     smtpTransport.sendMail(mailOption, function(error, response){
         if(error){
             console.log(error);
-            rs.send("error");
         }else{
             console.log("Message sent: " + response.message);
-            rs.send("sent");
         }
     });
 };
-exports.sendForgotPWMail = function(req, rs){
+exports.sendForgotPWMail = function(user){
     var mailOption = {
-        to: req.body.email,
+        to: user.email,
         subject: "GonGraph - Passwort Vergessen",
-        text: "neues Passwort ist folgendes: ..."
+        text: "Das Passwort ist:" + user.pw
     };
 
     //TODO generate new PW
@@ -38,10 +39,8 @@ exports.sendForgotPWMail = function(req, rs){
     smtpTransport.sendMail(mailOption, function(error, response){
         if(error){
             console.error.bind(console, 'Mail send error: ')
-            rs.send("error");
         }else{
             console.log("Message sent: " + response.message);
-            rs.send("sent");
         }
     });
 };
