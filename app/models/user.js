@@ -10,7 +10,8 @@ var userSchema = mongoose.Schema({
     email: String,
     name: String,
     pw: String,
-    aktiv: Boolean
+    aktiv: Boolean,
+    dashboards:[mongoose.Schema.ObjectId]
 });
 
 //--- Methods
@@ -27,8 +28,3 @@ userSchema.methods.validPassword = function(password) {
 
 //--- Create Model and Expose
 module.exports = mongoose.model('User', userSchema);
-
-//exports.addUser = function(req, rs){
-
-//    });
-//}

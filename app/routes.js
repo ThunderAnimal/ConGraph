@@ -3,6 +3,7 @@
  */
 var mail = require('../app//modules/mail.js');
 var userManager = require('../app/modules/userManager.js');
+var dashboardManager = require('../app/modules/dashboardManager.js');
 var session;
 // app/routes.js
 module.exports = function(app){
@@ -22,7 +23,7 @@ module.exports = function(app){
         res.render('login');
     });
     app.post('/login', function(req, res){
-       userManager.checkLogin(req,res,session);
+       userManager.checkLogin(req,res);
     });
 
     //Send Regstrie Mail
@@ -38,7 +39,6 @@ module.exports = function(app){
     //New User
     app.post('/newUser', function(req, rs){
         userManager.addUser(req,rs);
-        //TODO addUser anpassen
     });
     app.get('/act', function(req, rs){
         userManager.activateUser(req,rs);
@@ -51,8 +51,26 @@ module.exports = function(app){
         //direct to page
         res.render('home');
     });
+    app.post('/connectUser', isLoggedIn, function(req, res){
+        userManager.connectUser(req,res);
+    });
 
-    app.post('/logout', isLoggedIn)
+    app.post('/logout', isLoggedIn, function(req, res){
+        var sess = req.session;
+        
+        sess.login = false;
+        sess.id = '';
+
+        res.redirect('/login');
+    });
+    
+    app.post('/newDashboard', isLoggedIn, function(req, res){
+        dashboardManager.createDashboard(req, res);
+    });
+    app.get('/dashboards', isLoggedIn, function(req, res){
+        dashboardManager.getDashboards(req, res);
+        
+    });
 
 
 };

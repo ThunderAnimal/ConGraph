@@ -8,7 +8,7 @@ exports.checkLogin = function(req, res){
     var session = req.session;
 
     session.login = false;
-    session.email = '';
+    session._id = '';
 
     User.findOne({'name' : req.body.name}, function(err, user){
         if(err)
@@ -17,7 +17,7 @@ exports.checkLogin = function(req, res){
         if(user){
             if(user.pw == req.body.pw && user.aktiv == true){
                 session.login = true;
-                session.email = user.email;
+                session._id = user._id;
                 res.end('success');
             }
             else {
@@ -29,6 +29,11 @@ exports.checkLogin = function(req, res){
         }
     });
 };
+exports.connectUser = function(req, res){
+    var session = req.session;
+    
+    res.send(String(session._id));
+}
 
 exports.addUser = function(req, res){
     User.find()
@@ -42,7 +47,8 @@ exports.addUser = function(req, res){
                     email: req.body.email,
                     name: req.body.name,
                     pw: req.body.pw,
-                    aktiv: false });
+                    aktiv: false,
+                    dashboards: []});
                 newUser.save(function(err, user){
                     if(err){
                         res.send('error');
