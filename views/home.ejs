@@ -5,16 +5,25 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/jquery.min.js"></script>
     <script src="../js/chat.js"></script>
+    <script src="../js/panel_jq.js"></script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+
 </head>
 <body>
 <header>ConGraph <a>powered by NoteJS</a></header>
 
 
 <aside>
-
+    <div>
+        <input id="newPanel" type="submit" value="Add Panel">
+    </div>
     <div class="chatTitle">
         <h1>CHAT</h1>
         <input id="name" type="text" placeholder="dein Name" />
@@ -30,12 +39,42 @@
 </aside>
 
 <section>
-    <h1>
-        TEST
-    </h1>
-    <p>
-        das ist ein TEST
-    </p>
+    <div class="column" id="column1">
+
+        <div class="portlet">
+            <div class="portlet-header">Feeds</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+
+        <div class="portlet">
+            <div class="portlet-header">News</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+
+    </div>
+
+    <div class="column">
+
+        <div class="portlet">
+            <div class="portlet-header">Shopping</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+
+    </div>
+
+    <div class="column">
+
+        <div class="portlet">
+            <div class="portlet-header">Links</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+
+        <div class="portlet">
+            <div class="portlet-header">Images</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+
+    </div>
 </section>
 
 

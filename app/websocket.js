@@ -17,20 +17,25 @@ module.exports = function(io){
             console.log(socket);
             socket.emit('chat', { zeit: new Date(), text: 'Du bist nun mit dem Server verbunden!' });
         });
-        
-        //console.log("Session: ", socket.handshake.session);
         // Chat -----------------------
         // wenn ein Benutzer einen Text senden
         socket.on('chat', function (data) {
             // so wird dieser Text an alle anderen Benutzer gesendet
             io.sockets.emit('chat', { zeit: new Date(), name: data.name || 'Anonym', text: data.text });
         });
-
         socket.on('joinDashboard', function(dashboardId){
             
             
         });
-        
-        
+        // Panel -----------------------
+        socket.on('panel', function () {
+            // Panel wird an alle Nutzer gesendet
+            io.sockets.emit('panel');
+        });
+
+
+
+
+        // NEW -----------------------
     });
 }
