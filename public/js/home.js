@@ -5,9 +5,6 @@ $(document).ready(function() {
     $.post('../connectUser', {}, function(data){
         io.connect().emit('connectUser', data);
     });
-    $.get('../dashboards',{},function(data){
-        console.log(data);
-    });
     $('#btnAddDashboard').click(function(){
         $.post('../newDashboard', {name: "testDashboard"}, function(data){
             if(data === 'success'){
@@ -22,4 +19,24 @@ $(document).ready(function() {
             window.location.href = '../login';
         });
     });
+    $('#btnDashboardList').click(function(){
+        $.get('../dashboards',{},function(data){
+            var functionText = "";
+            $('#dashboardList').empty();
+            for (var i=0; i< data.length;i++) {
+                functionText = "loadDashboard('"+ data[i].id +"')";
+                $('#dashboardList').append(
+                    $('<li onclick="' + functionText + '" role="presentation">' +
+                        '<a role="menuitem" tabindex="-1" href="#">'+
+                            data[i].name+
+                         '</a>' +
+                    '</li>')
+                );
+            }
+        });
+
+    });
 });
+function loadDashboard(dashboardID){
+    console.log(dashboardID);
+}

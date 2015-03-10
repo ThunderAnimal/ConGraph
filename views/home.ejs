@@ -13,6 +13,8 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/chat.js"></script>
     <script src="../js/panel_jq.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/home.js"></script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 
 </head>
@@ -23,6 +25,21 @@
 <aside>
     <div>
         <input id="newPanel" type="submit" value="Add Panel">
+    </div>
+    <div>
+        <input id="btnAddDashboard" type="submit" value="Add Dashboard">
+    </div>
+    <div class="dropdown">
+        <button id="btnDashboardList" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+            Dropdown
+            <span class="caret"></span>
+        </button>
+        <ul id="dashboardList" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation" onclick="loadDashboards()"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+        </ul>
     </div>
     <div class="chatTitle">
         <h1>CHAT</h1>

@@ -15,7 +15,6 @@ $(document).ready(function(){
                     'Links</div>'+
                     '<div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>'+
             '</div>'));
-        ;
     });
 
     // Panel hinzufügen
