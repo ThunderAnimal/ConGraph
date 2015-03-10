@@ -96,5 +96,10 @@ exports.forgetPass = function(req,res){
         }
 
     });
-}
+};
+exports.getUserName = function(userId, callback){
+        User.findById(userId, function(err, user){
+            callback(user.name);
+        });
+};
 

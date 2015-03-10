@@ -4,7 +4,7 @@
 
 var Dashboard   = require('../models/dashboard.js');
 var User        = require('../models/user.js');
-
+var Mail = require('../modules/mail.js');
 
 exports.getDashboards = function(req, res){
     var session = req.session;
@@ -35,5 +35,33 @@ exports.createDashboard = function(req, res){
             });
 
         });
+    });
+};
+exports.addUser = function(req, res){
+    var dashboardId = req.body.dashboardId;
+    var userMail = req.body.userMail;
+
+    User.findOne({'email': userMail}, function(err, user){
+        if(err) {
+            res.send('Error');
+        }
+        if(user){
+            user.dashboards.push(dashboardId);
+            user.save(function(err,user){
+               if(err){
+                   res.send('Error');
+               }else{
+                   Mail.sendInvitationDashboard(user);
+                   res.send('success');
+               }
+            });
+        }else{
+            res.send('Nutzer nicht Vorhanden');
+        }
+    });
+};
+exports.getPanels = function(dashboardId,callback){
+    Dashboard.findById(dashboardId, function(err, dashboard){
+        callback(dashboard.panels);
     });
 };

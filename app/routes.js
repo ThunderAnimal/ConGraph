@@ -69,7 +69,9 @@ module.exports = function(app){
     });
     app.get('/dashboards', isLoggedIn, function(req, res){
         dashboardManager.getDashboards(req, res);
-        
+    });
+    app.post('/addUserToDashboard', isLoggedIn, function(reg, res){
+
     });
 
 
