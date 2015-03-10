@@ -60,8 +60,68 @@ exports.addUser = function(req, res){
         }
     });
 };
+exports.addPanel = function(dashboardId, title, text, callback){
+    Dashboard.findById(dashboardId, function(err, dashboard){
+        var panels = dashboard.panels;
+        var maxNum = 0;
+
+        //Nach größter Nummer in 1. Spalte suchen
+        for(var i = 0; i < panels.length; i++){
+            if(maxNum <= panels[i].y && panels[i].x == 0){
+                maxNum = panels[i].y + 1;
+            }
+        }
+
+        //Add Panel
+        dashboard.panels.push({name: title, beschreibung: text, x: 0, y: maxNum});
+        dashboard.save(function(err, dashboard){
+            callback();
+        });
+    });
+};
 exports.getPanels = function(dashboardId,callback){
     Dashboard.findById(dashboardId, function(err, dashboard){
         callback(dashboard.panels);
     });
 };
+exports.renderDashboardToHtml = function(panels){
+    var dashboardHtml;
+    var panelHtml;
+
+    var column1 = '<div class="column" id="column1">';
+    var column2 = '<div class="column" id="column2">';
+    var column3 = '<div class="column" id="column3">';
+
+    //Panels sortieren nach dem y-wert --> Richtige Reihenfolge für Ausgabe
+    panels.sort(function(a,b){
+       return parseInt(a.y) - parseInt(b.y)
+    });
+
+    //columns mit Panels füllen
+    for(var i = 0; i < panels.length; i++){
+        panelHtml = renderPanelToHtml(panels[i].name,panels[i].beschreibung);
+        switch (panels[i].x){
+            case 0: column1 += panelHtml;
+                break;
+            case 1: column2 += panelHtml;
+                break;
+            case 2: column3 += panelHtml;
+                break;
+        }
+    }
+    column1 += '</div>';
+    column2 += '</div>';
+    column3 += '</div>';
+
+    dashboardHtml = column1 + column2 + column3;
+
+    return dashboardHtml;
+};
+
+function renderPanelToHtml(title, content){
+    var html =  '<div class="portlet">' +
+                '<div class="portlet-header">' + title + '</div> ' +
+                '<div class="portlet-content">' + content + '</div>' +
+                '</div>';
+    return html;
+}

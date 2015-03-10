@@ -1,28 +1,31 @@
 /**
  * Created by martin_w on 03.03.2015.
  */
-
 $(document).ready(function() {
+    //---------- Function on Start------------------
 
-
-
+    //Connect User bei Server und Websocket
     $.post('../connectUser', {}, function(data){
         io.connect().emit('connectUser', data);
     });
+
+
+    //---------- Triggers------------------
+
+    //Ertselle neues Dashboard
     $('#btnAddDashboard').click(function(){
-        $.post('../newDashboard', {name: "testDashboard"}, function(data){
+        var name = $('#inputDashboardName').val();
+        $.post('../newDashboard', {name: name}, function(data){
             if(data === 'success'){
-                $.get('../dashboards',{},function(data){
-                    console.log(data);
-                });
+                alert("Dashboard angelegt");
+            }
+            else{
+                alert("Error");
             }
         });
     });
-    $('#btnLogout').click(function(){
-        $.post('../logout',{},function(){
-            window.location.href = '../login';
-        });
-    });
+
+    //Generiere Dynamische die Dashboard Liste
     $('#btnDashboardList').click(function(){
         $.get('../dashboards',{},function(data){
             var functionText = "";
@@ -40,28 +43,110 @@ $(document).ready(function() {
         });
 
     });
-    io.connect().on('updateDashboard', function (data) {
-        console.log(data);
-        $('#dashboard').html(data);
-        $( ".column" ).sortable({
-            connectWith: ".column",
-            handle: ".portlet-header",
-            cancel: ".portlet-toggle",
-            placeholder: "portlet-placeholder ui-corner-all",
-            stop: function(event, ui) {
-                alert("New position: " + ui.item.index());
-                console.log(ui);
-                console.log(ui.item.parent().attr('id'));
-
+    $('#btnAddUserToDashboard').click(function(){
+        var userMail = $('#inputUserMail').val();
+        var dashboardId = sessionStorage.getItem("dashboardID");
+        if(dashboardId === undefined || dashboardId === null){
+            alert("In keinen Dashboard!");
+            return;
+        }
+        $.post('../addUserToDashboard',{dashboardId: dashboardId, userMail:userMail}, function(data){
+            if(data !== 'success'){
+                alert(data);
+            }else{
+                alert("Nutzer Erfolgreich hinzugefügt!");
             }
         });
     });
+    $('#btnNewPanel').click(function(){
+        io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
+    });
+
+
+    $('#senden').click(senden);
+
+    $('#text').keypress(function (e) {
+        if (e.which == 13) {
+            senden();
+        }
+    });
+
+    //Logout
+    $('#btnLogout').click(function(){
+        $.post('../logout',{},function(){
+            window.location.href = '../login';
+        });
+    });
+
+    //---------- Websocket notification------------------
+
+    //Server Meldet Dashboard hat sich verändert
+    io.connect().on('updateDashboard', function (data) {
+        $('#dashboard').html(data);
+        renderFunctionSortable();
+    });
+
+    //Server meldet neue Chatnachricht
+    io.connect().on('chat', function (data) {
+        var zeit = new Date(data.zeit);
+        $('#content').append(
+            $('<p></p>').append(
+                // Uhrzeit
+                $('<span>').text('[' +
+                    (zeit.getHours() < 10 ? '0' + zeit.getHours() : zeit.getHours())
+                    + ':' +
+                    (zeit.getMinutes() < 10 ? '0' + zeit.getMinutes() : zeit.getMinutes())
+                    + '] '
+                ),
+                // Name
+                $('<b>').text(typeof(data.name) != 'undefined' ? data.name + ': ' : ''),
+                // Text
+                $('<span>').text(data.text))
+        );
+        // nach unten scrollen
+        $('.chatList').scrollTop($('.chatList')[0].scrollHeight);
+    });
 });
 
-function loadDashboard(dashboardID){
-    io.connect().emit('joinDashboard', dashboardID);
+//---------- Function ------------------
 
+// Nachricht senden
+function senden(){
+    // Eingabefelder auslesen
+    var name = $('#name').val();
+    var text = $('#text').val();
+    // Socket senden
+    io.connect().emit('chat', { text: text });
+    // Text-Eingabe leeren
+    $('#text').val('');
 }
-function renderDashboard(panels){
 
+function loadDashboard(dashboardID){
+    sessionStorage.setItem("dashboardID",dashboardID);
+    io.connect().emit('joinDashboard', dashboardID);
+}
+function renderFunctionSortable(){
+    $( ".column" ).sortable({
+        connectWith: ".column",
+        handle: ".portlet-header",
+        cancel: ".portlet-toggle",
+        placeholder: "portlet-placeholder ui-corner-all",
+        stop: function(event, ui) {
+            //alert("New position: " + ui.item.index());
+            //console.log(ui);
+            //console.log(ui.item.parent().attr('id'));
+
+        }
+    });
+    $( ".portlet" )
+        .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+        .find( ".portlet-header" )
+        .addClass( "ui-widget-header ui-corner-all" )
+        .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
+
+    $( ".portlet-toggle" ).click(function() {
+        var icon = $( this );
+        icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+        icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+    });
 }

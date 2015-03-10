@@ -1,7 +1,7 @@
 /**
  * Created by martin_w on 18.02.2015.
  */
-var mail = require('../app//modules/mail.js');
+var mail = require('../app/modules/mail.js');
 var userManager = require('../app/modules/userManager.js');
 var dashboardManager = require('../app/modules/dashboardManager.js');
 var session;
@@ -71,7 +71,7 @@ module.exports = function(app){
         dashboardManager.getDashboards(req, res);
     });
     app.post('/addUserToDashboard', isLoggedIn, function(reg, res){
-
+        dashboardManager.addUser(reg,res);
     });
 
 
