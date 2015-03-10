@@ -42,8 +42,6 @@ module.exports = function(io){
             socket.emit('updateDashboard', {});
         });
 
-        socket.on('')
-
         // Panel -----------------------
         socket.on('panel', function () {
             // Panel wird an alle Nutzer gesendet
