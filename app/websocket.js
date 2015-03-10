@@ -29,7 +29,15 @@ module.exports = function(io){
             socket.dashboardId = dashboardId;
 
             dashboardManager.getPanels(dashboardId, function(panels){
-                socket.emit('updateDashboard', panels);
+                var html = '<div class="column" id="column1">' +
+                    '<div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ">'+
+
+                '<div class="portlet-header ui-widget-header ui-corner-all " > ' +
+                '<span class="ui-icon ui-icon-minusthick portlet-toggle"></span>'+
+                'Links</div>'+
+                '<div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>'+
+                '</div></div>';
+                socket.emit('updateDashboard', html);
             });
 
 

@@ -1,7 +1,11 @@
 /**
  * Created by martin_w on 03.03.2015.
  */
+
 $(document).ready(function() {
+
+
+
     $.post('../connectUser', {}, function(data){
         io.connect().emit('connectUser', data);
     });
@@ -36,7 +40,28 @@ $(document).ready(function() {
         });
 
     });
+    io.connect().on('updateDashboard', function (data) {
+        console.log(data);
+        $('#dashboard').html(data);
+        $( ".column" ).sortable({
+            connectWith: ".column",
+            handle: ".portlet-header",
+            cancel: ".portlet-toggle",
+            placeholder: "portlet-placeholder ui-corner-all",
+            stop: function(event, ui) {
+                alert("New position: " + ui.item.index());
+                console.log(ui);
+                console.log(ui.item.parent().attr('id'));
+
+            }
+        });
+    });
 });
+
 function loadDashboard(dashboardID){
-    console.log(dashboardID);
+    io.connect().emit('joinDashboard', dashboardID);
+
+}
+function renderDashboard(panels){
+
 }

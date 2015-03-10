@@ -31,7 +31,13 @@ $(document).ready(function(){
             connectWith: ".column",
             handle: ".portlet-header",
             cancel: ".portlet-toggle",
-            placeholder: "portlet-placeholder ui-corner-all"
+            placeholder: "portlet-placeholder ui-corner-all",
+            stop: function(event, ui) {
+                alert("New position: " + ui.item.index());
+                console.log(ui);
+                console.log(ui.item.parent().attr('id'));
+               
+            }
         });
 
         $( ".portlet" )
@@ -46,5 +52,7 @@ $(document).ready(function(){
             icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
         });
     });
+
+
 
 });
