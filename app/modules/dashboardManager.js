@@ -115,7 +115,6 @@ exports.changePanelPosition = function(dashboardId, panelId,  newX, newY, callba
 
         //Wegspeichern in DB
         dashboard.panels = panels;
-        console.log(panels);
         dashboard.save(function(error, dashboard){
             if(error){
                 console.error.bind(console, 'Mail send error: ');

@@ -3,6 +3,10 @@
  */
 $(document).ready(function() {
     //---------- Function on Start------------------
+    //Disable Buttons
+    $('#btnNewPanel').attr("disabled", true);
+    $('#btnAddUserToDashboardModal').attr("disabled", true);
+
 
     //Connect User bei Server und Websocket
     $.post('../connectUser', {}, function(data){
@@ -59,7 +63,6 @@ $(document).ready(function() {
         });
     });
     $('#btnNewPanel').click(function(){
-        alert('hello');
         io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
     });
 
@@ -105,7 +108,7 @@ $(document).ready(function() {
                 $('<span>').text(data.text))
         );
         // nach unten scrollen
-        //$('.chatList').scrollTop($('.chatList')[0].scrollHeight);
+        $('.chatList').scrollTop($('.chatList')[0].scrollHeight);
     });
 });
 
@@ -123,6 +126,10 @@ function senden(){
 }
 
 function loadDashboard(dashboardID, dashboardName){
+    //Enable Buttons
+    $('#btnNewPanel').attr("disabled", false);
+    $('#btnAddUserToDashboardModal').attr("disabled", false);
+
     sessionStorage.setItem("dashboardID",dashboardID);
     io.connect().emit('joinDashboard', dashboardID);
     $('#headerDashboard').text(dashboardName);
@@ -149,8 +156,6 @@ function renderFunctionSortable(){
                 x = 1;
             else
                 x = 2;
-
-            console.log("New Posotion: " + x + " " + y);
 
             //Send new Position to Websocket
             io.connect().emit('changePositionPanel', { panelId: panelId, x: x, y: y });
