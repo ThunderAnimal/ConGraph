@@ -31,11 +31,11 @@ $(document).ready(function() {
             var functionText = "";
             $('#dashboardList').empty();
             for (var i=0; i< data.length;i++) {
-                functionText = "loadDashboard('"+ data[i].id +"')";
+                functionText = "loadDashboard('"+ data[i].id +"', '" + data[i].name + "' )";
                 $('#dashboardList').append(
                     $('<li onclick="' + functionText + '" role="presentation">' +
                         '<a role="menuitem" tabindex="-1" href="#">'+
-                            data[i].name+
+                            data[i].name +
                          '</a>' +
                     '</li>')
                 );
@@ -59,6 +59,7 @@ $(document).ready(function() {
         });
     });
     $('#btnNewPanel').click(function(){
+        alert('hello');
         io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
     });
 
@@ -104,7 +105,7 @@ $(document).ready(function() {
                 $('<span>').text(data.text))
         );
         // nach unten scrollen
-        $('.chatList').scrollTop($('.chatList')[0].scrollHeight);
+        //$('.chatList').scrollTop($('.chatList')[0].scrollHeight);
     });
 });
 
@@ -121,9 +122,10 @@ function senden(){
     $('#text').val('');
 }
 
-function loadDashboard(dashboardID){
+function loadDashboard(dashboardID, dashboardName){
     sessionStorage.setItem("dashboardID",dashboardID);
     io.connect().emit('joinDashboard', dashboardID);
+    $('#headerDashboard').text(dashboardName);
 }
 function renderFunctionSortable(){
     $( ".column" ).sortable({
