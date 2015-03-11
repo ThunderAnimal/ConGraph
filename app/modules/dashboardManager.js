@@ -79,6 +79,54 @@ exports.addPanel = function(dashboardId, title, text, callback){
         });
     });
 };
+exports.changePanelPosition = function(dashboardId, panelId,  newX, newY, callback){
+    Dashboard.findById(dashboardId, function(err, dashboard) {
+        var oldX, oldY;
+        var panels = dashboard.panels;
+
+        //get Old Position of Panel
+        for(var i = 0; i < panels.length; i++){
+            if(panels[i]._id.toString() === panelId.toString()){
+                oldX = panels[i].x;
+                oldY = panels[i].y;
+                break;
+            }
+        }
+
+        //Positining all Panels
+
+        //Veränderung alle Panels
+        if(oldX === newX){
+            panels = changePositionInColumn(panels,oldX,oldY,newY);
+        }
+        else{
+            panels = removePositionInColumn(panels, oldX, oldY);
+            panels = addPositionInColumn(panels, newX, newY);
+        }
+
+        //Veränderung des aktuellen Panels
+        for(var i = 0; i < panels.length; i++){
+            if(panels[i]._id.toString() === panelId.toString()){
+                panels[i].x = newX;
+                panels[i].y = newY;
+                break;
+            }
+        }
+
+        //Wegspeichern in DB
+        dashboard.panels = panels;
+        console.log(panels);
+        dashboard.save(function(error, dashboard){
+            if(error){
+                console.error.bind(console, 'Mail send error: ');
+            }
+            //Rückmeldung das Verarbeitung Fertig
+            callback();
+        });
+
+
+    });
+};
 exports.getPanels = function(dashboardId,callback){
     Dashboard.findById(dashboardId, function(err, dashboard){
         callback(dashboard.panels);
@@ -99,7 +147,7 @@ exports.renderDashboardToHtml = function(panels){
 
     //columns mit Panels füllen
     for(var i = 0; i < panels.length; i++){
-        panelHtml = renderPanelToHtml(panels[i].name,panels[i].beschreibung);
+        panelHtml = renderPanelToHtml(panels[i].name,panels[i].beschreibung, panels[i]._id);
         switch (panels[i].x){
             case 0: column1 += panelHtml;
                 break;
@@ -118,10 +166,43 @@ exports.renderDashboardToHtml = function(panels){
     return dashboardHtml;
 };
 
-function renderPanelToHtml(title, content){
-    var html =  '<div class="portlet">' +
+function renderPanelToHtml(title, content, id){
+    var html =  '<div class="portlet" id ="' + id +  '">' +
                 '<div class="portlet-header">' + title + '</div> ' +
                 '<div class="portlet-content">' + content + '</div>' +
                 '</div>';
     return html;
+}
+function changePositionInColumn(panels,column, oldY, newY){
+    for(var i = 0; i < panels.length; i++){
+        if(panels[i].x == column){
+            if(panels[i].y > newY){
+                if(panels[i].y < oldY)
+                    panels[i].y += 1;
+                else
+                    panels[i].y -= 1;
+            }
+        }
+    }
+    return panels;
+}
+function removePositionInColumn(panels, column, row){
+    for(var i = 0; i < panels.length; i++){
+        if(panels[i].x == column){
+            if(panels[i].y > row){
+                panels[i].y -= 1;
+            }
+        }
+    }
+    return panels;
+}
+function addPositionInColumn(panels, column, row){
+    for(var i = 0; i < panels.length; i++){
+        if(panels[i].x == column){
+            if(panels[i].y > row){
+                panels[i].y += 1;
+            }
+        }
+    }
+    return panels;
 }

@@ -45,13 +45,24 @@ module.exports = function(io){
                 });
             });
         });
-        socket.on('changePanel', function(data){
+        socket.on('changePositionPanel', function(data){
+            dashboardManager.changePanelPosition(socket.dashboard, data.panelId, data.x,data.y,function(){
+                dashboardManager.getPanels(socket.dashboard, function(panels){
+                    var html = dashboardManager.renderDashboardToHtml(panels);
+
+                    //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
+                    socket.broadcast.to(socket.dashboard).emit('updateDashboard', html);
+                });
+            });
+        });
+
+        socket.on('changeValuePanel', function(data){
            //TODO Panel speichern
 
             dashboardManager.getPanels(socket.dashboard, function(panels){
                 var html = dashboardManager.renderDashboardToHtml(panels);
 
-                //An alle Clients die Änderung senden, außer bei den Angefragten Client
+                //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
                 socket.broadcast.to(socket.dashboard).emit('updateDashboard', html);
             });
         });

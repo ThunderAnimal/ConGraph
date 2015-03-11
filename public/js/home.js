@@ -132,10 +132,26 @@ function renderFunctionSortable(){
         cancel: ".portlet-toggle",
         placeholder: "portlet-placeholder ui-corner-all",
         stop: function(event, ui) {
-            //alert("New position: " + ui.item.index());
-            //console.log(ui);
-            //console.log(ui.item.parent().attr('id'));
+            //Function when move portlet
 
+            var panelId = ui.item.attr('id');
+
+            //New Position
+            var y = ui.item.index();
+            var x;
+            var helpX = ui.item.parent().attr('id');
+
+            if(helpX === "column1")
+                x = 0;
+            else if(helpX === "column2")
+                x = 1;
+            else
+                x = 2;
+
+            console.log("New Posotion: " + x + " " + y);
+
+            //Send new Position to Websocket
+            io.connect().emit('changePositionPanel', { panelId: panelId, x: x, y: y });
         }
     });
     $( ".portlet" )
