@@ -22,6 +22,7 @@ $(document).ready(function() {
         $.post('../newDashboard', {name: name}, function(data){
             if(data === 'success'){
                 alert("Dashboard angelegt");
+                $('#modalNewDashboard').modal('hide');
             }
             else{
                 alert("Error");
@@ -59,6 +60,7 @@ $(document).ready(function() {
                 alert(data);
             }else{
                 alert("Nutzer Erfolgreich hinzugefügt!");
+                $('#modalAddUserToDashboard').modal('hide');
             }
         });
     });
@@ -67,12 +69,16 @@ $(document).ready(function() {
     //    io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
     //});
     $('#btnAddPanel').click(function(){
+
         var title = $('#inputPanelTitle').val();
         var desc = $('#inputPanelDescription').val();
         var link = $('#inputPanelLink').val();
 
-        //io.connect().emit('addPanel', { title: title, text: desc, link: link });
+        io.connect().emit('addPanel', { title: title, text: desc});
+        $('#inputPanelTitle').val('');
+        $('#inputPanelDescription').val('');
 
+        $('#modalNewPanel').modal('hide');
     });
 
     $('#senden').click(senden);

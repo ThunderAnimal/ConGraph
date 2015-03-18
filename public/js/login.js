@@ -7,6 +7,7 @@ $(document).ready(function(){
         $.post('../sendForgotPWMail', {email: to}, function(data){
             if(data == 'sent'){
                 alert('Mail versendet');
+                $('#modalPWForgot').modal('hide');
             }
             else{
                 alert(data);
@@ -17,6 +18,7 @@ $(document).ready(function(){
         $.post('../newUser', {email: $('#inputRegisterMail').val(), name: $('#inputRegisterName').val(), pw: $('#inputRegisterPW').val()}, function(data){
             if(data == 'success'){
                 alert('User angelegt');
+                $('#modalRegister').modal('hide');
             }
             else{
                 alert(data);
