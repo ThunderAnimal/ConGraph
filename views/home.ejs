@@ -51,9 +51,9 @@
     </div>
     <div id="mbar">
 
-        <button id="btnNewPanel" type="button" class="btnM btnPnl" name="addpanel" value="add panel">
+        <button id="btnNewPanel" type="button" class="btnM btnPnl" name="addpanel" value="add panel" onclick="$('#modalNewPanel').modal('show')">
             <span class="glyphicon glyphicon-plus pull-left" style="font-size: xx-large;" aria-hidden="true"></span>
-            Add Panel
+           Add Panel
         </button>
         <button id="btnAddUserToDashboardModal" type="button" class="btnM btnUs" name="manageuser" value="manage user" onclick="$('#modalAddUserToDashboard').modal('show')">
             Manage User
@@ -119,6 +119,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" id="btnAddDashboard">Add Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal New Panel-->
+<div class="modal fade" id="modalNewPanel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Panel</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-lg">
+                    <input id="inputPanelTitle" type="text" class="form-control" placeholder="Panel Title" aria-describedby="sizing-addon1">
+                    <input id="inputPanelDescription" type="text" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1">
+                    <input id="inputPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1">
+                    <input id="inputPanelFile" name="test" type="file" class="form-control">
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnM" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnAddPanel">Add Panel</button>
             </div>
         </div>
     </div>

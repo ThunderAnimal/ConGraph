@@ -62,10 +62,18 @@ $(document).ready(function() {
             }
         });
     });
-    $('#btnNewPanel').click(function(){
-        io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
-    });
+    //$('#btnNewPanel').click(function(){
+    //
+    //    io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
+    //});
+    $('#btnAddPanel').click(function(){
+        var title = $('#inputPanelTitle').val();
+        var desc = $('#inputPanelDescription').val();
+        var link = $('#inputPanelLink').val();
 
+        //io.connect().emit('addPanel', { title: title, text: desc, link: link });
+
+    });
 
     $('#senden').click(senden);
 
@@ -120,7 +128,8 @@ function senden(){
     var name = $('#name').val();
     var text = $('#text').val();
     // Socket senden
-    io.connect().emit('chat', { text: text });
+    if (text.length > 0)
+        io.connect().emit('chat', { text: text });
     // Text-Eingabe leeren
     $('#text').val('');
 }
