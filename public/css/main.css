@@ -211,8 +211,9 @@ nav {
 }
 
 #dashboard {
-    height: 500px;
-    margin-left: 40px;
+    height: auto;
+    overflow:auto;
+    white-space: nowrap;
 }
 
 footer {

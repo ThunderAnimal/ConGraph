@@ -57,13 +57,13 @@ module.exports = function(io){
         });
 
         socket.on('changeValuePanel', function(data){
-           //TODO Panel speichern
+            dashboardManager.editPanel(socket.dashboard, data.panelId, data.title, data.text,function(){
+                dashboardManager.getPanels(socket.dashboard, function(panels){
+                    var html = dashboardManager.renderDashboardToHtml(panels);
 
-            dashboardManager.getPanels(socket.dashboard, function(panels){
-                var html = dashboardManager.renderDashboardToHtml(panels);
-
-                //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
-                socket.broadcast.to(socket.dashboard).emit('updateDashboard', html);
+                    //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
+                    io.sockets.in(socket.dashboard).emit('updateDashboard', html);
+                });
             });
         });
         socket.on('leaveDashboard', function(){

@@ -79,6 +79,27 @@ exports.addPanel = function(dashboardId, title, text, callback){
         });
     });
 };
+exports.editPanel = function(dashboardId, panelId, title, text, callback){
+    Dashboard.findById(dashboardId, function(err, dashboard) {
+        var panels = dashboard.panels;
+
+        //Find Panel
+        for(var i = 0; i < panels.length; i++){
+            if(panelId.toString() == panels[i]._id.toString()){
+                //Edit Panel
+                dashboard.panels[i].name = title;
+                dashboard.panels[i].beschreibung = text;
+                break;
+            }
+        }
+        dashboard.save(function(error, dashbaord){
+            if(error){
+                console.error.bind(console, 'DB save error: ');
+            }
+            callback();
+        });
+    });
+};
 exports.changePanelPosition = function(dashboardId, panelId,  newX, newY, callback){
     Dashboard.findById(dashboardId, function(err, dashboard) {
         var oldX, oldY;
@@ -117,7 +138,7 @@ exports.changePanelPosition = function(dashboardId, panelId,  newX, newY, callba
         dashboard.panels = panels;
         dashboard.save(function(error, dashboard){
             if(error){
-                console.error.bind(console, 'Mail send error: ');
+                console.error.bind(console, 'DB save error:');
             }
             //Rückmeldung das Verarbeitung Fertig
             callback();
@@ -135,9 +156,11 @@ exports.renderDashboardToHtml = function(panels){
     var dashboardHtml;
     var panelHtml;
 
-    var column1 = '<div class="column" id="column1">';
-    var column2 = '<div class="column" id="column2">';
-    var column3 = '<div class="column" id="column3">';
+    var column1 = '<div class="column col-xs-2 col-xs-offset-1" id="column1">';
+    var column2 = '<div class="column col-xs-2" id="column2">';
+    var column3 = '<div class="column col-xs-2" id="column3">';
+    var column4 = '<div class="column col-xs-2" id="column4">';
+    var column5 = '<div class="column col-xs-2" id="column5">';
 
     //Panels sortieren nach dem y-wert --> Richtige Reihenfolge für Ausgabe
     panels.sort(function(a,b){
@@ -154,21 +177,30 @@ exports.renderDashboardToHtml = function(panels){
                 break;
             case 2: column3 += panelHtml;
                 break;
+            case 3: column4 += panelHtml;
+                break;
+            case 4: column5 += panelHtml;
+                break;
         }
     }
     column1 += '</div>';
     column2 += '</div>';
     column3 += '</div>';
+    column4 += '</div>';
+    column5 += '</div>';
 
-    dashboardHtml = column1 + column2 + column3;
+
+
+    dashboardHtml = column1 + column2 + column3 + column4 + column5;
 
     return dashboardHtml;
 };
 
 function renderPanelToHtml(title, content, id){
+    functionText = "editPanel('"+ id +"')";
     var html =  '<div class="portlet" id ="' + id +  '">' +
-                '<div class="portlet-header">' + title + '</div> ' +
-                '<div class="portlet-content">' + content + '</div>' +
+                '<div class="portlet-header" style="cursor: move;" id="header' + id +  '">' + title + ' </div> ' +
+                '<div class="portlet-content" style="cursor: pointer;" onclick="'+functionText+'" id="text' + id +  '">' + content + '</div>' +
                 '</div>';
     return html;
 }

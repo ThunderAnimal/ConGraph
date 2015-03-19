@@ -64,10 +64,7 @@ $(document).ready(function() {
             }
         });
     });
-    //$('#btnNewPanel').click(function(){
-    //
-    //    io.connect().emit('addPanel', { title: "TEST PANEL", text: "Hallo das ist ein TEST Panel, dass ist komplett statisch angelegt"});
-    //});
+
     $('#btnAddPanel').click(function(){
 
         var title = $('#inputPanelTitle').val();
@@ -75,11 +72,23 @@ $(document).ready(function() {
         var link = $('#inputPanelLink').val();
 
         io.connect().emit('addPanel', { title: title, text: desc});
+
         $('#inputPanelTitle').val('');
         $('#inputPanelDescription').val('');
 
         $('#modalNewPanel').modal('hide');
     });
+    $('#btnEditPanel').click(function(){
+
+        var title = $('#editPanelTitle').val();
+        var desc = $('#editPanelDescription').val();
+        var link = $('#editPanelLink').val();
+
+        io.connect().emit('changeValuePanel', { panelId: globalPanelId, title: title, text: desc});
+
+        $('#modalEditPanel').modal('hide');
+    });
+
 
     $('#senden').click(senden);
 
@@ -169,8 +178,12 @@ function renderFunctionSortable(){
                 x = 0;
             else if(helpX === "column2")
                 x = 1;
-            else
+            else if(helpX === "column3")
                 x = 2;
+            else if(helpX === "column4")
+                x = 3;
+            else if(helpX === "column5")
+                x = 4;
 
             //Send new Position to Websocket
             io.connect().emit('changePositionPanel', { panelId: panelId, x: x, y: y });
@@ -183,8 +196,21 @@ function renderFunctionSortable(){
         .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
 
     $( ".portlet-toggle" ).click(function() {
+
         var icon = $( this );
         icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
         icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
     });
 }
+
+function editPanel(panelID){
+    var text = $('#text'+panelID);
+    var title = $('#header'+panelID);
+
+    $('#editPanelTitle').val(title.text());
+    $('#editPanelDescription').val(text.html());
+    globalPanelId = panelID;
+    $('#modalEditPanel').modal('show');
+}
+var globalPanelId = null;
+var globalPashBoardId = null;
