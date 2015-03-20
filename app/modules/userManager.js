@@ -102,4 +102,42 @@ exports.getUserName = function(userId, callback){
             callback(user.name);
         });
 };
+exports.addUser = function(req, res){
+    var dashboardId = req.body.dashboardId;
+    var userMail = req.body.userMail;
+
+    User.findOne({'email': userMail}, function(err, user){
+        if(err) {
+            res.send('Error');
+        }
+        if(user){
+            user.dashboards.push(dashboardId);
+            user.save(function(err,user){
+                if(err){
+                    res.send('Error');
+                }else{
+                    Mail.sendInvitationDashboard(user);
+                    res.send('success');
+                }
+            });
+        }else{
+            res.send('Nutzer nicht Vorhanden');
+        }
+    });
+};
+exports.leaveDashboard = function(userId, daschboardId, callback){
+    User.findById(userId, function(err, user){
+        var i = user.dashboards.indexOf(daschboardId);
+        user.dashboards.splice(i,1);
+
+        //Save
+        user.save(function(error, user) {
+            if (error) {
+                console.error.bind(console, 'DB save error:');
+            }
+            //Rückmeldung das Verarbeitung Fertig
+            callback();
+        });
+    });
+};
 

@@ -4,8 +4,7 @@
 $(document).ready(function() {
     //---------- Function on Start------------------
     //Disable Buttons
-    $('#btnNewPanel').attr("disabled", true);
-    $('#btnAddUserToDashboardModal').attr("disabled", true);
+    disableControllButtons();
 
 
     //Connect User bei Server und Websocket
@@ -63,6 +62,14 @@ $(document).ready(function() {
                 $('#modalAddUserToDashboard').modal('hide');
             }
         });
+    });
+    $('#btnLeaveDashboard').click(function(){
+        if(confirm("Do you want to leave the dashborad?")) {
+            disableControllButtons();
+            globalDashBoardId = "";
+            io.connect().emit('leaveDashboard', {});
+            $('#headerDashboard').text("No Dashbaord selected!");
+        }
     });
 
     $('#btnAddPanel').click(function(){
@@ -150,10 +157,8 @@ function senden(){
 }
 
 function loadDashboard(dashboardID, dashboardName){
-    //Enable Buttons
-    $('#btnNewPanel').attr("disabled", false);
-    $('#btnAddUserToDashboardModal').attr("disabled", false);
 
+    enableControllButtons();
     globalDashBoardId = dashboardID;
 
     io.connect().emit('joinDashboard', dashboardID);
@@ -226,8 +231,18 @@ function showPanel(panelID){
     //$('#editPanelTitle').val(title.text());
     $('#viewPanelDescription').text(text.html());
     globalPanelId = panelID;
-    console.log(title.text());
     $('#modalViewPanel').modal('show');
+}
+function enableControllButtons(){
+    //Enable Buttons
+    $('#btnNewPanel').attr("disabled", false);
+    $('#btnAddUserToDashboardModal').attr("disabled", false);
+    $('#btnLeaveDashboard').attr('disabled', false);
+}
+function disableControllButtons(){
+    $('#btnNewPanel').attr("disabled", true);
+    $('#btnAddUserToDashboardModal').attr("disabled", true);
+    $('#btnLeaveDashboard').attr('disabled', true);
 }
 var globalPanelId = null;
 var globalDashBoardId = null;

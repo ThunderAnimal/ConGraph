@@ -77,10 +77,12 @@ module.exports = function(io){
             });
         });
         socket.on('leaveDashboard', function(){
-            socket.leave(socket.dashboard);
-            socket.dashboard = '';
+            userManager.leaveDashboard(socket.userid, socket.dashboard, function(){
+                socket.leave(socket.dashboard);
+                socket.dashboard = '';
 
-            socket.emit('updateDashboard', {});
+                socket.emit('updateDashboard', {});
+            });
         });
     });
 }
