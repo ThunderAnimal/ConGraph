@@ -51,12 +51,15 @@
     </div>
     <div id="mbar">
 
-        <button id="btnNewPanel" type="button" class="btnM btnPnl" name="addpanel" value="add panel" onclick="$('#modalNewPanel').modal('show')">
+        <button id="btnNewPanel" type="button" class="btnM btnPnl" onclick="$('#modalNewPanel').modal('show')">
             <span class="glyphicon glyphicon-plus pull-left" style="font-size: xx-large;" aria-hidden="true"></span>
            Add Panel
         </button>
-        <button id="btnAddUserToDashboardModal" type="button" class="btnM btnUs" name="manageuser" value="manage user" onclick="$('#modalAddUserToDashboard').modal('show')">
+        <button id="btnAddUserToDashboardModal" type="button" class="btnM btnUs" onclick="$('#modalAddUserToDashboard').modal('show')">
             Manage User
+        </button>
+        <button id="btnLeaveDashboard" type="button" class="btnM btnUs">
+            Leave Dashboard
         </button>
         <button id="colorChange" type="button" class="btnCol" name="addpanel">
         </button>
@@ -140,7 +143,7 @@
                     <textarea id="inputPanelDescription" rows="10" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1"></textarea>
                 </div>
                 <div class="form-group">
-                    <input id="inputPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1">
+                    <input id="inputPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1" value="http://">
                 </div>
                 <div class="form-group">
                     <input id="inputPanelFile" name="test" type="file" class="form-control">
