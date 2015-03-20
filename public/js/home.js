@@ -50,7 +50,7 @@ $(document).ready(function() {
     });
     $('#btnAddUserToDashboard').click(function(){
         var userMail = $('#inputUserMail').val();
-        var dashboardId = sessionStorage.getItem("dashboardID");
+        var dashboardId = globalDashBoardId;
         if(dashboardId === undefined || dashboardId === null){
             alert("In keinen Dashboard!");
             return;
@@ -154,7 +154,8 @@ function loadDashboard(dashboardID, dashboardName){
     $('#btnNewPanel').attr("disabled", false);
     $('#btnAddUserToDashboardModal').attr("disabled", false);
 
-    sessionStorage.setItem("dashboardID",dashboardID);
+    globalDashBoardId = dashboardID;
+
     io.connect().emit('joinDashboard', dashboardID);
     $('#headerDashboard').text(dashboardName);
 }
@@ -193,13 +194,13 @@ function renderFunctionSortable(){
         .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
         .find( ".portlet-header" )
         .addClass( "ui-widget-header ui-corner-all" )
-        .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
+        .prepend( "<span class='glyphicon glyphicon-remove portlet-delete pull-right' style='cursor: pointer; padding-top: 10px'></span>");
 
-    $( ".portlet-toggle" ).click(function() {
-
-        var icon = $( this );
-        icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-        icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+    $( ".portlet-delete" ).click(function() {
+        var panelId = $(this).parent().parent().attr('id');
+        if(confirm("Do you want to delete the panel?")){
+            deletePanel(panelId);
+        }
     });
 }
 
@@ -212,5 +213,8 @@ function editPanel(panelID){
     globalPanelId = panelID;
     $('#modalEditPanel').modal('show');
 }
+function deletePanel(panelId){
+    io.connect().emit('removePanel', { panelId: panelId});
+}
 var globalPanelId = null;
-var globalPashBoardId = null;
+var globalDashBoardId = null;

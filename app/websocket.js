@@ -66,6 +66,16 @@ module.exports = function(io){
                 });
             });
         });
+        socket.on('removePanel', function(data){
+            dashboardManager.deletePanel(socket.dashboard, data.panelId, function(){
+                dashboardManager.getPanels(socket.dashboard, function(panels){
+                    var html = dashboardManager.renderDashboardToHtml(panels);
+
+                    //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
+                    io.sockets.in(socket.dashboard).emit('updateDashboard', html);
+                });
+            });
+        });
         socket.on('leaveDashboard', function(){
             socket.leave(socket.dashboard);
             socket.dashboard = '';

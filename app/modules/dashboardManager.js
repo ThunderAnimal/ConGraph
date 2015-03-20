@@ -100,6 +100,36 @@ exports.editPanel = function(dashboardId, panelId, title, text, callback){
         });
     });
 };
+exports.deletePanel = function(dashboardId, panelId, callback){
+    Dashboard.findById(dashboardId, function(err, dashboard) {
+        var panels = dashboard.panels;
+        var column, row;
+
+        //Find Panel
+        for (var i = 0; i < panels.length; i++) {
+            if (panelId.toString() == panels[i]._id.toString()) {
+                column = panels[i].x;
+                row = panels[i].y;
+
+                //Remove panel
+                panels.splice(i,1);
+                break;
+            }
+        }
+        //Change Position von panels
+        panels = removePositionInColumn(panels,column, row);
+        dashboard.panels = panels;
+
+        //Save
+        dashboard.save(function(error, dashboard){
+            if(error){
+                console.error.bind(console, 'DB save error:');
+            }
+            //Rückmeldung das Verarbeitung Fertig
+            callback();
+        });
+    });
+};
 exports.changePanelPosition = function(dashboardId, panelId,  newX, newY, callback){
     Dashboard.findById(dashboardId, function(err, dashboard) {
         var oldX, oldY;
