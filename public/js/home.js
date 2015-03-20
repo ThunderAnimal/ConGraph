@@ -204,17 +204,30 @@ function renderFunctionSortable(){
     });
 }
 
-function editPanel(panelID){
-    var text = $('#text'+panelID);
-    var title = $('#header'+panelID);
+function editPanel(globalPanelId){
+    $('#modalViewPanel').modal('hide');
+    var text = $('#text'+globalPanelId);
+    var title = $('#header'+globalPanelId);
 
     $('#editPanelTitle').val(title.text());
     $('#editPanelDescription').val(text.html());
-    globalPanelId = panelID;
+
     $('#modalEditPanel').modal('show');
 }
-function deletePanel(panelId){
-    io.connect().emit('removePanel', { panelId: panelId});
+
+function deletePanel(panelId) {
+    io.connect().emit('removePanel', {panelId: panelId});
+}
+
+function showPanel(panelID){
+    var text = $('#text'+panelID);
+    var title = $('#header'+panelID);
+    $('#viewPanelLabel').text(title.text());
+    //$('#editPanelTitle').val(title.text());
+    $('#viewPanelDescription').text(text.html());
+    globalPanelId = panelID;
+    console.log(title.text());
+    $('#modalViewPanel').modal('show');
 }
 var globalPanelId = null;
 var globalDashBoardId = null;

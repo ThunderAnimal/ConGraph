@@ -184,6 +184,30 @@
         </div>
     </div>
 </div>
+<!--Modal View Panel-->
+<div class="modal fade" id="modalViewPanel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="viewPanelLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="well" id="viewPanelDescription"></div>
+                </div>
+                <div class="form-group">
+                    <href id="viewPanelLink" class="form-control" aria-describedby="sizing-addon1"></href>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnEditPanel" onclick="editPanel(globalPanelId)">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <footer>Copyright © 2015</footer>
 </body>
 </html>

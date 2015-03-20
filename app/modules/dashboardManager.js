@@ -227,7 +227,8 @@ exports.renderDashboardToHtml = function(panels){
 };
 
 function renderPanelToHtml(title, content, id){
-    functionText = "editPanel('"+ id +"')";
+    //functionText = "editPanel('"+ id +"')";
+    functionText = "showPanel('"+ id +"')";
     var html =  '<div class="portlet" id ="' + id +  '">' +
                 '<div class="portlet-header" style="cursor: move;" id="header' + id +  '">' + title + ' </div> ' +
                 '<div class="portlet-content" style="cursor: pointer;" onclick="'+functionText+'" id="text' + id +  '">' + content + '</div>' +
