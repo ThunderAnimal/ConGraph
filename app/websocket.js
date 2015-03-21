@@ -14,7 +14,15 @@ module.exports = function(io){
         socket.on('connectUser', function (userid) {
             socket.userid = userid;
             socket.dashboard = '';
+
+            //An anderen Client der mit Account verbunden ist, disconnet senden
+            socket.broadcast.to(userid).emit('disconnectUser',{});
+
+            //Client jon Room Clients
+            socket.join(userid);
             socket.emit('chat', { zeit: new Date(), text: 'Du bist nun mit dem Server verbunden!' });
+
+
         });
         socket.on('chat', function (data) {
             // so wird dieser Text an alle anderen Benutzer gesendet

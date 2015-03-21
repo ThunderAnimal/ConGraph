@@ -107,9 +107,7 @@ $(document).ready(function() {
 
     //Logout
     $('#btnLogout').click(function(){
-        $.post('../logout',{},function(){
-            window.location.href = '../login';
-        });
+        logout();
     });
 
     //---------- Websocket notification------------------
@@ -118,6 +116,10 @@ $(document).ready(function() {
     io.connect().on('updateDashboard', function (data) {
         $('#dashboard').html(data);
         renderFunctionSortable();
+    });
+    io.connect().on('disconnectUser', function(){
+        alert("session is over");
+        logout();
     });
 
     //Server meldet neue Chatnachricht
@@ -143,6 +145,12 @@ $(document).ready(function() {
 });
 
 //---------- Function ------------------
+function logout(){
+    $.post('../logout',{},function(){
+        window.location.href = '../login';
+    });
+}
+
 
 // Nachricht senden
 function senden(){
