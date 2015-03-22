@@ -37,50 +37,50 @@ module.exports = function(io){
             socket.dashboard = dashboardId;
 
             dashboardManager.getPanels(dashboardId, function(panels){
-                var html = dashboardManager.renderDashboardToHtml(panels);
+                var json = dashboardManager.renderDashboardToJson(panels);
 
                 //Dashboard nur bei den Angefragten Client akktualisieren
-                socket.emit('updateDashboard', html);
+                socket.emit('updateDashboard', json);
             });
         });
         socket.on('addPanel', function(data){
-            dashboardManager.addPanel(socket.dashboard, data.title, data.text, function(){
+            dashboardManager.addPanel(socket.dashboard, data.title, data.text, data.link, data.img , function(){
                 dashboardManager.getPanels(socket.dashboard, function(panels){
-                    var html = dashboardManager.renderDashboardToHtml(panels);
+                    var json = dashboardManager.renderDashboardToJson(panels);
 
                     //Nur bei den Clients das Dashboard Akktualisieren die auch in dem Dashboard sind
-                    io.sockets.in(socket.dashboard).emit('updateDashboard', html);
+                    io.sockets.in(socket.dashboard).emit('updateDashboard', json);
                 });
             });
         });
         socket.on('changePositionPanel', function(data){
-            dashboardManager.changePanelPosition(socket.dashboard, data.panelId, data.x,data.y,function(){
+            dashboardManager.changePanelPosition(socket.dashboard, data.serialize,function(){
                 dashboardManager.getPanels(socket.dashboard, function(panels){
-                    var html = dashboardManager.renderDashboardToHtml(panels);
+                    var json = dashboardManager.renderDashboardToJson(panels);
 
                     //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
-                    socket.broadcast.to(socket.dashboard).emit('updateDashboard', html);
+                    socket.broadcast.to(socket.dashboard).emit('updateDashboard', json);
                 });
             });
         });
 
         socket.on('changeValuePanel', function(data){
-            dashboardManager.editPanel(socket.dashboard, data.panelId, data.title, data.text,function(){
+            dashboardManager.editPanel(socket.dashboard, data.panelId, data.title, data.text, data.link, data.img ,function(){
                 dashboardManager.getPanels(socket.dashboard, function(panels){
-                    var html = dashboardManager.renderDashboardToHtml(panels);
+                    var json = dashboardManager.renderDashboardToJson(panels);
 
                     //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
-                    io.sockets.in(socket.dashboard).emit('updateDashboard', html);
+                    io.sockets.in(socket.dashboard).emit('updateDashboard', json);
                 });
             });
         });
         socket.on('removePanel', function(data){
             dashboardManager.deletePanel(socket.dashboard, data.panelId, function(){
                 dashboardManager.getPanels(socket.dashboard, function(panels){
-                    var html = dashboardManager.renderDashboardToHtml(panels);
+                    var json = dashboardManager.renderDashboardToJson(panels);
 
                     //An alle Clients die Änderung senden die im Dashboard sind, außer bei den Angefragten Client
-                    io.sockets.in(socket.dashboard).emit('updateDashboard', html);
+                    io.sockets.in(socket.dashboard).emit('updateDashboard', json);
                 });
             });
         });

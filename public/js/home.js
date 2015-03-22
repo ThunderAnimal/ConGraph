@@ -1,8 +1,56 @@
 /**
  * Created by martin_w on 03.03.2015.
  */
+
+var globalPanelId = null;
+var globalDashBoardId = null;
+var gridster;
+
 $(document).ready(function() {
     //---------- Function on Start------------------
+
+    //Define Gridster
+    gridster = $(".gridster ul").gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [200, 200],
+        min_cols:4,
+        max_cols:4,
+        serialize_params: function($w, wdg){
+            return{
+                id: $w.attr('id'),
+                col: $w.attr('data-col'),
+                row: $w.attr('data-row'),
+                size_x: $w.attr('data-sizex'),
+                size_y: $w.attr('data-sizey')
+            }
+        },
+        draggable:{
+            stop: function(e, ui, $widget){
+                var s = gridster.serialize_changed();
+                s = JSON.stringify(s);
+                io.connect().emit('changePositionPanel', { serialize: s});
+            }
+        },
+        resize:{
+            enabled: true,
+            axes: ['both'],
+            max_size:[2,2],
+            stop: function(e, ui, $widget){
+                var id = $widget.attr('id');
+                if($widget.height() < 400){
+                    $('#image' + id).removeClass('box-image-big').addClass('box-image-small');
+                }
+                else{
+                    $('#image' + id).removeClass('box-image-small').addClass('box-image-big');
+                }
+                var s = gridster.serialize_changed();
+                s = JSON.stringify(s);
+                io.connect().emit('changePositionPanel', { serialize: s});
+            }
+        }
+    }).data('gridster');
+
+
     //Disable Buttons
     disableControllButtons();
 
@@ -77,13 +125,25 @@ $(document).ready(function() {
         var title = $('#inputPanelTitle').val();
         var desc = $('#inputPanelDescription').val();
         var link = $('#inputPanelLink').val();
+        var img = $('#inputPanelImg').val();
 
-        io.connect().emit('addPanel', { title: title, text: desc});
+
+
+        io.connect().emit('addPanel', { title: title, text: desc, link: link, img: img});
 
         $('#inputPanelTitle').val('');
         $('#inputPanelDescription').val('');
+        $('#inputPanelLink').val('');
+        $('#inputPanelImg').val('');
+
 
         $('#modalNewPanel').modal('hide');
+    });
+    $('#btnDeletePanel').click(function(){
+        if(confirm("Do you want to delete the panel?")){
+            deletePanel(globalPanelId);
+        }
+
     });
     $('#btnEditPanel').click(function(){
 
@@ -91,7 +151,7 @@ $(document).ready(function() {
         var desc = $('#editPanelDescription').val();
         var link = $('#editPanelLink').val();
 
-        io.connect().emit('changeValuePanel', { panelId: globalPanelId, title: title, text: desc});
+        io.connect().emit('changeValuePanel', { panelId: globalPanelId, title: title, text: desc, link: link, img: ""});
 
         $('#modalEditPanel').modal('hide');
     });
@@ -114,8 +174,13 @@ $(document).ready(function() {
 
     //Server Meldet Dashboard hat sich verändert
     io.connect().on('updateDashboard', function (data) {
-        $('#dashboard').html(data);
-        renderFunctionSortable();
+        var serialization = data;
+        serialization = Gridster.sort_by_row_and_col_asc(serialization);
+        gridster.remove_all_widgets();
+        $.each(serialization, function() {
+            gridster.add_widget(this.content, this.size_x, this.size_y, this.col, this.row);
+        });
+        gridster.$changed = $([]);
     });
     io.connect().on('disconnectUser', function(){
         alert("session is over");
@@ -172,50 +237,6 @@ function loadDashboard(dashboardID, dashboardName){
     io.connect().emit('joinDashboard', dashboardID);
     $('#headerDashboard').text(dashboardName);
 }
-function renderFunctionSortable(){
-    $( ".column" ).sortable({
-        connectWith: ".column",
-        handle: ".portlet-header",
-        cancel: ".portlet-toggle",
-        placeholder: "portlet-placeholder ui-corner-all",
-        stop: function(event, ui) {
-            //Function when move portlet
-
-            var panelId = ui.item.attr('id');
-
-            //New Position
-            var y = ui.item.index();
-            var x;
-            var helpX = ui.item.parent().attr('id');
-
-            if(helpX === "column1")
-                x = 0;
-            else if(helpX === "column2")
-                x = 1;
-            else if(helpX === "column3")
-                x = 2;
-            else if(helpX === "column4")
-                x = 3;
-            else if(helpX === "column5")
-                x = 4;
-
-            //Send new Position to Websocket
-            io.connect().emit('changePositionPanel', { panelId: panelId, x: x, y: y });
-        }
-    });
-    $( ".portlet" )
-        .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-        .find( ".portlet-header" )
-        .addClass( "ui-widget-header ui-corner-all" )
-        .prepend( "<span class='glyphicon glyphicon-remove portlet-delete pull-right' style='cursor: pointer; padding-top: 10px'></span>");
-
-    $( ".portlet-delete" ).click(function() {
-        var panelId = $(this).parent().parent().attr('id');
-        if(confirm("Do you want to delete the panel?")){
-            deletePanel(panelId);
-        }
-    });
-}
 
 function editPanel(globalPanelId){
     $('#modalViewPanel').modal('hide');
@@ -230,13 +251,13 @@ function editPanel(globalPanelId){
 
 function deletePanel(panelId) {
     io.connect().emit('removePanel', {panelId: panelId});
+    $('#modalViewPanel').modal('hide');
 }
 
 function showPanel(panelID){
     var text = $('#text'+panelID);
     var title = $('#header'+panelID);
     $('#viewPanelLabel').text(title.text());
-    //$('#editPanelTitle').val(title.text());
     $('#viewPanelDescription').text(text.html());
     globalPanelId = panelID;
     $('#modalViewPanel').modal('show');
@@ -252,5 +273,4 @@ function disableControllButtons(){
     $('#btnAddUserToDashboardModal').attr("disabled", true);
     $('#btnLeaveDashboard').attr('disabled', true);
 }
-var globalPanelId = null;
-var globalDashBoardId = null;
+

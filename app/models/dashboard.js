@@ -14,9 +14,11 @@ var dashboardSchema = mongoose.Schema({
             attachment: Object,
             link: String,
             color: String,
-            x: Number,
-            y: Number
-            
+            img: String,
+            col: Number,
+            row: Number,
+            size_x: Number,
+            size_y: Number
         }
     ]
 });
