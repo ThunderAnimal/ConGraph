@@ -50,6 +50,19 @@ $(document).ready(function() {
         }
     }).data('gridster');
 
+    //Icons laden
+    $.get('../icons',{},function(data){
+        if (data == "error")
+            console.log(data);
+        else {
+            console.log(data);
+        }
+        //var icon = new Array();
+        //icon.push()
+        //$('#setImages').append(
+        //    $('<img src=')
+
+    });
 
     //Disable Buttons
     disableControllButtons();
@@ -164,6 +177,9 @@ $(document).ready(function() {
             senden();
         }
     });
+
+
+
 
     //Logout
     $('#btnLogout').click(function(){
