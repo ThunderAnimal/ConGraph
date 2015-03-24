@@ -13,6 +13,7 @@
     "morgan": "*",
     "serve-favicon": "*",
     "ejs": "*",
-    "express-session": "*"
+    "express-session": "*",
+    "fs" : "*"
   }
 }

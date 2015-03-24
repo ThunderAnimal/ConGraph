@@ -4,6 +4,7 @@
 var mail = require('../app/modules/mail.js');
 var userManager = require('../app/modules/userManager.js');
 var dashboardManager = require('../app/modules/dashboardManager.js');
+var fileManager = require('../app/modules/fileManager.js');
 var session;
 // app/routes.js
 module.exports = function(app){
@@ -70,11 +71,15 @@ module.exports = function(app){
     app.get('/dashboards', isLoggedIn, function(req, res){
         dashboardManager.getDashboards(req, res);
     });
+    app.get('/icons', isLoggedIn, function(req, res){
+        fileManager.getIconList(req,res);
+    });
     app.post('/addUserToDashboard', isLoggedIn, function(reg, res){
         userManager.addUser(reg,res);
     });
-
-
+    app.post('/upload', isLoggedIn, function(req, res){
+        fileManager.addFile(req,res);
+    });
 };
 function isLoggedIn(req, res, next){
     session = req.session;
