@@ -53,7 +53,7 @@
     </div>
     <div id="mbar">
 
-        <button id="btnNewPanel" type="button" class="btnM btnPnl" onclick="$('#modalNewPanel').modal('show'); $('#setIcon').empty();">
+        <button id="btnNewPanel" type="button" class="btnM btnPnl" onclick="$('#modalNewPanel').modal('show')">
             <span class="glyphicon glyphicon-plus pull-left" style="font-size: xx-large;" aria-hidden="true"></span>
            Add Panel
         </button>
@@ -154,16 +154,14 @@
                 <div class="form-group">
                     <input id="inputPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1" value="http://">
                 </div>
-                <div class="form-group img">
-                    <!--<input id="inputPanelImg" type="text" class="form-control" placeholder="IMG">-->
-                    <label>Icon</label>
-                        <div id="setIcon"></div>
+                <div class="form-group">
+                    <input id="inputPanelImg" type="text" class="form-control" placeholder="IMG">
                 </div>
                 <div class="form-group">
                     <input id="inputPanelFile" name="test" type="file" class="form-control">
                 </div>
-                <div class="form-group img" id="setImages">
-                    <!--Content Load Dynamik-->
+                <div class="form-group" id="setImages">
+                    <img src="../img/icon/basic16.png" width="50px" height="50px" onclick="getImg()" id="">
                 </div>
             </div>
             <div class="modal-footer">
@@ -192,16 +190,8 @@
                     <div class="form-group">
                         <input id="editPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1">
                     </div>
-                    <div class="form-group img">
-                        <!--<input id="inputPanelImg" type="text" class="form-control" placeholder="IMG">-->
-                        <label>Icon</label>
-                        <div id="setEditIcon"></div>
-                    </div>
                     <div class="form-group">
                         <input id="editPanelFile" name="test" type="file" class="form-control">
-                    </div>
-                    <div class="form-group img" id="setEditImages">
-                        <!--Content Load Dynamik-->
                     </div>
                 </div>
             <div class="modal-footer">
