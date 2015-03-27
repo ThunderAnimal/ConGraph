@@ -10,7 +10,13 @@ var globalIcon;
 $(document).ready(function() {
     //---------- Function on Start------------------
 
-    //Define Gridster
+    //### Anzeige
+    $('#progressAddPanel').hide();
+    //Disable Buttons
+    disableControllButtons();
+
+
+    //### Gridster
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [200, 200],
@@ -51,6 +57,8 @@ $(document).ready(function() {
         }
     }).data('gridster');
 
+    //### Load Icons
+
     //Icons laden
     $.get('../icons',{},function(data){
         var functionText = "";
@@ -71,10 +79,6 @@ $(document).ready(function() {
             }
         }
     });
-
-    //Disable Buttons
-    disableControllButtons();
-
 
     //Connect User bei Server und Websocket
     $.post('../connectUser', {}, function(data){
@@ -142,20 +146,15 @@ $(document).ready(function() {
     });
 
     $('#btnAddPanel').click(function(){
+        var file = $('#inputPanelFile').get(0).files[0];
+        $('#progressAddPanel').show();
 
-        var title = $('#inputPanelTitle').val();
-        var desc = $('#inputPanelDescription').val();
-        var link = $('#inputPanelLink').val();
-        var img = getImg(globalIcon);
-
-        io.connect().emit('addPanel', { title: title, text: desc, link: link, img: img});
-
-        $('#inputPanelTitle').val('');
-        $('#inputPanelDescription').val('');
-        $('#inputPanelLink').val('');
-        $('#inputPanelImg').val('');
-
-        $('#modalNewPanel').modal('hide');
+        if(file !== undefined){
+            $('#uploadFileForm').submit();
+        }else{
+            addPanelWebSocket('');
+            clearAddPanelModal();
+        }
     });
     $('#btnDeletePanel').click(function(){
         if(confirm("Do you want to delete the panel?")){
@@ -183,6 +182,15 @@ $(document).ready(function() {
     //Logout
     $('#btnLogout').click(function(){
         logout();
+    });
+    $('#uploadFileForm').submit(function() {
+        $(this).ajaxSubmit({
+             success: function (response) {
+                 addPanelWebSocket(response);
+                 clearAddPanelModal();
+            }
+        });
+        return false;
     });
 
     //---------- Websocket notification------------------
@@ -273,8 +281,25 @@ function showPanel(panelID){
     var text = $('#text'+panelID);
     var title = $('#header'+panelID);
     var icon = $('#image'+panelID);
+    var file = $('#file'+panelID);
 
-    getImg(icon.attr('src'));
+    $('#showFile').empty();
+    if(file.text() !== 'undefined'){
+        $('#showFile').append(
+            $('<a target="_blank" href="' + file.text() + '"> <img src="/img/file.png" width="150px" height="150px"></a>')
+        );
+    }
+    if(icon.attr('src') === undefined || icon.attr('src') === null){
+        $('#setViewIcon').hide();
+    }
+
+    else{
+        $('#setViewIcon').show();
+        getImg(icon.attr('src'));
+    }
+
+
+
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());
     globalPanelId = panelID;
@@ -317,4 +342,21 @@ function loadUserToDashboard(){
         }
 
     });
+}
+function clearAddPanelModal(){
+    $('#inputPanelTitle').val('');
+    $('#inputPanelDescription').val('');
+    $('#inputPanelLink').val('');
+    $('#inputPanelImg').val('');
+    $('#inputPanelFile').val('');
+
+    $('#progressAddPanel').hide();
+    $('#modalNewPanel').modal('hide');
+}
+function addPanelWebSocket(file){
+    var title = $('#inputPanelTitle').val();
+    var desc = $('#inputPanelDescription').val();
+    var link = $('#inputPanelLink').val();
+    var icon = globalIcon;
+    io.connect().emit('addPanel', { title: title, text: desc, link: link, img: icon, file: file});
 }

@@ -29,5 +29,6 @@ exports.getIconList = function(req, res){
     });
 };
 exports.addFile = function(req, res){
-
+    var file = "../img/upload/" + req.files.userFile.name;
+    res.end(file);
 };

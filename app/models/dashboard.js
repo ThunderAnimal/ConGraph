@@ -12,6 +12,7 @@ var dashboardSchema = mongoose.Schema({
             name: String,
             beschreibung: String,
             attachment: Object,
+            file: String,
             link: String,
             color: String,
             img: String,

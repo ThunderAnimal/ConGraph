@@ -37,10 +37,10 @@ exports.createDashboard = function(req, res){
         });
     });
 };
-exports.addPanel = function(dashboardId, title, text, link, img, callback){
+exports.addPanel = function(dashboardId, title, text, link, img, file, callback){
     Dashboard.findById(dashboardId, function(err, dashboard){
         //Add Panel
-        dashboard.panels.push({name: title, beschreibung: text, img: img, link: link,  col: 1 , row: 1,  size_x: 1, size_y: 2});
+        dashboard.panels.push({name: title, beschreibung: text, img: img, link: link, file: file,  col: 1 , row: 1,  size_x: 1, size_y: 2});
         dashboard.save(function(err, dashboard){
             callback();
         });
@@ -133,7 +133,7 @@ exports.renderDashboardToJson = function(panels){
 
     //columns mit Panels füllen
     for(var i = 0; i < panels.length; i++){
-        panelHtml = renderPanelToHtml( panels[i]._id, panels[i].img, panels[i].name, panels[i].beschreibung, panels[i].size_y);
+        panelHtml = renderPanelToHtml( panels[i]._id, panels[i].img, panels[i].name, panels[i].beschreibung, panels[i].file, panels[i].size_y);
         dashboardJson.push({content: panelHtml,
                             col: panels[i].col,
                             row: panels[i].row,
@@ -143,7 +143,7 @@ exports.renderDashboardToJson = function(panels){
     return dashboardJson;
 };
 
-function renderPanelToHtml(id, img, title, content, size_y){
+function renderPanelToHtml(id, img, title, content, file, size_y){
     var imgSize;
     var divBoxImg;
     var functionText = "showPanel('" + id +"')";
@@ -161,14 +161,19 @@ function renderPanelToHtml(id, img, title, content, size_y){
                     '</div>'
     }
 
-    var html = '<li id="' + id +'">' +
+    var html = '<li id="' + id +'" >' +
                     '<div class="box">' +
                         divBoxImg +
                         '<div class="box-header">' +
                             '<h3 id="header' + id + '">' + title + '</h3>' +
                         '</div>' +
-                        '<div id="text'+ id + '" class="box-content" onclick=' + functionText + '>' +
-                            content +
+                        '<div class="box-content" onclick=' + functionText + '>' +
+                            '<div id="text'+ id + '">' +
+                                content +
+                            '</div>' +
+                            '<div id="file'+ id + '" class="hidden">' +
+                                 file +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
                 '</li>';

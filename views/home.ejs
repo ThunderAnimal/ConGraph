@@ -16,6 +16,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/home.js"></script>
     <script src="../js/jquery-ui.min.js"></script>
+    <script src="../js/jquery.form.js"></script>
     <script src="../js/jquery.gridster.min.js"></script>
 
 </head>
@@ -160,11 +161,18 @@
                 <div class="form-group img">
                     <div id="setIcon"></div>
                 </div>
-                <div class="form-group">
-                    <input id="inputPanelFile" name="test" type="file" class="form-control">
-                </div>
+                <form id="uploadFileForm" enctype="multipart/form-data" action="/upload" method="post">
+                    <div class="form-group">
+                        <input id="inputPanelFile" name="userFile" type="file" class="form-control">
+                    </div>
+                </form>
                 <div class="form-group img" id="setImages">
                     <!--Content Load Dynamik-->
+                </div>
+                <div id="progressAddPanel" class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span>Upload File</span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -228,6 +236,9 @@
                 </div>
                 <div class="form-group">
                     <href id="viewPanelLink" class="form-control" aria-describedby="sizing-addon1"></href>
+                </div>
+                <div id="showFile" class="form-group">
+
                 </div>
             </div>
             <div class="modal-footer">

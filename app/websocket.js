@@ -44,7 +44,7 @@ module.exports = function(io){
             });
         });
         socket.on('addPanel', function(data){
-            dashboardManager.addPanel(socket.dashboard, data.title, data.text, data.link, data.img , function(){
+            dashboardManager.addPanel(socket.dashboard, data.title, data.text, data.link, data.img, data.file , function(){
                 dashboardManager.getPanels(socket.dashboard, function(panels){
                     var json = dashboardManager.renderDashboardToJson(panels);
 
