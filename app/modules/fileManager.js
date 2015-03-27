@@ -5,7 +5,7 @@ var fs = require('fs');
 
 exports.getIconList = function(req, res){
     var iconList = new Array();
-    var path = __dirname + "/public/img/icon"
+    var path = __dirname + "/../../public/img/icon";
     fs.realpath(path, function(err, path) {
         if (err) {
             console.log(err);
@@ -20,7 +20,6 @@ exports.getIconList = function(req, res){
                 }else {
                     files.forEach(function (f) {
                         iconList.push({name: f, source: "../img/icon/" + f});
-                        console.log('Files: ' + f);
                     });
                     res.send(iconList);
                 }

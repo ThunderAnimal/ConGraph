@@ -146,8 +146,7 @@ exports.renderDashboardToJson = function(panels){
 function renderPanelToHtml(id, img, title, content, size_y){
     var imgSize;
     var divBoxImg;
-    var functionText = "showPanel('" + id + "')";
-
+    var functionText = "showPanel('" + id +"')";
     if(size_y >= 2)
         imgSize = "box-image-big";
     else
