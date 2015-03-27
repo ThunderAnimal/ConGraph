@@ -58,7 +58,7 @@ exports.addUser = function(req, res){
                     }
                 });
             }
-    });
+        });
 };
 exports.activateUser = function(req, res){
     var id = req.query.id;
@@ -102,7 +102,27 @@ exports.getUserName = function(userId, callback){
             callback(user.name);
         });
 };
-exports.addUser = function(req, res){
+exports.getUserToDashboard = function(req, res){
+    var dashbaordId = req.query.dashbaordId;
+    var userList = new Array();
+    User.find()
+        .exec(function(err, users){
+            if(err){
+                res.send('error');
+            }else {
+                for (var i = 0; i < users.length; i++) {
+                    for (var j = 0; j < users[i].dashboards.length; j++) {
+                        if (dashbaordId.toString() == users[i].dashboards[j].toString()) {
+                            userList.push({name: users[i].name, email: users[i].email});
+                            break;
+                        }
+                    }
+                }
+                res.send(userList);
+            }
+        });
+};
+exports.addDashboard = function(req, res){
     var dashboardId = req.body.dashboardId;
     var userMail = req.body.userMail;
 

@@ -57,7 +57,7 @@
             <span class="glyphicon glyphicon-plus pull-left" style="font-size: xx-large;" aria-hidden="true"></span>
            Add Panel
         </button>
-        <button id="btnAddUserToDashboardModal" type="button" class="btnM btnUs" onclick="$('#modalAddUserToDashboard').modal('show')">
+        <button id="btnAddUserToDashboardModal" type="button" class="btnM btnUs" onclick="$('#modalAddUserToDashboard').modal('show');loadUserToDashboard();">
             Manage User
         </button>
         <button id="btnLeaveDashboard" type="button" class="btnM btnUs">
@@ -105,6 +105,9 @@
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon" id="sizing-addon1">@</span>
                     <input id="inputUserMail" type="text" class="form-control" placeholder="e-Mail Adresse User" aria-describedby="sizing-addon1">
+                </div>
+                <div>
+
                 </div>
             </div>
             <div class="modal-footer">

@@ -75,7 +75,10 @@ module.exports = function(app){
         fileManager.getIconList(req,res);
     });
     app.post('/addUserToDashboard', isLoggedIn, function(reg, res){
-        userManager.addUser(reg,res);
+        userManager.addDashboard(reg,res);
+    });
+    app.get('/getUserToDashboard', isLoggedIn, function(req, res){
+        userManager.getUserToDashboard(req,res);
     });
     app.post('/upload', isLoggedIn, function(req, res){
         fileManager.addFile(req,res);

@@ -57,7 +57,6 @@ $(document).ready(function() {
         if (data == "error")
             console.log(data);
         else {
-            console.log(data);
             for (var i=0; i< data.length;i++) {
                 var functionText = "getImg('"+ data[i].source +"')";
                 $('#setImages').append(
@@ -274,7 +273,7 @@ function showPanel(panelID){
     var text = $('#text'+panelID);
     var title = $('#header'+panelID);
     var icon = $('#image'+panelID);
-    //console.log(icon.attr('src'));
+
     getImg(icon.attr('src'));
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());
@@ -292,6 +291,7 @@ function disableControllButtons(){
     $('#btnAddUserToDashboardModal').attr("disabled", true);
     $('#btnLeaveDashboard').attr('disabled', true);
 }
+
 function getImg(img){
     globalIcon = img;
     $('#setIcon').empty();
@@ -308,3 +308,13 @@ function getImg(img){
     )
 }
 
+function loadUserToDashboard(){
+    $.get('../getUserToDashboard',{dashbaordId: globalDashBoardId},function(data){
+        if (data == "error")
+            console.log(data);
+        else {
+            console.log(data);
+        }
+
+    });
+}
