@@ -5,6 +5,7 @@
 var globalPanelId = null;
 var globalDashBoardId = null;
 var gridster;
+var globalIcon;
 
 $(document).ready(function() {
     //---------- Function on Start------------------
@@ -52,16 +53,24 @@ $(document).ready(function() {
 
     //Icons laden
     $.get('../icons',{},function(data){
+        var functionText = "";
         if (data == "error")
             console.log(data);
         else {
             console.log(data);
+            for (var i=0; i< data.length;i++) {
+                var functionText = "getImg('"+ data[i].source +"')";
+                $('#setImages').append(
+                    $('<a> <img src="' + data[i].source + '" width="40px" height="40px"  onclick="'+ functionText +'"></a>')
+                );
+            }
+            for (var i=0; i< data.length;i++) {
+                var functionText = "getImg('"+ data[i].source +"')";
+                $('#setEditImages').append(
+                    $('<a> <img src="' + data[i].source + '" width="40px" height="40px"  onclick="'+ functionText +'"></a>')
+                );
+            }
         }
-        //var icon = new Array();
-        //icon.push()
-        //$('#setImages').append(
-        //    $('<img src=')
-
     });
 
     //Disable Buttons
@@ -138,9 +147,7 @@ $(document).ready(function() {
         var title = $('#inputPanelTitle').val();
         var desc = $('#inputPanelDescription').val();
         var link = $('#inputPanelLink').val();
-        var img = $('#inputPanelImg').val();
-
-
+        var img = getImg(globalIcon);
 
         io.connect().emit('addPanel', { title: title, text: desc, link: link, img: img});
 
@@ -149,23 +156,19 @@ $(document).ready(function() {
         $('#inputPanelLink').val('');
         $('#inputPanelImg').val('');
 
-
         $('#modalNewPanel').modal('hide');
     });
     $('#btnDeletePanel').click(function(){
         if(confirm("Do you want to delete the panel?")){
             deletePanel(globalPanelId);
         }
-
     });
     $('#btnEditPanel').click(function(){
-
         var title = $('#editPanelTitle').val();
         var desc = $('#editPanelDescription').val();
         var link = $('#editPanelLink').val();
-
-        io.connect().emit('changeValuePanel', { panelId: globalPanelId, title: title, text: desc, link: link, img: ""});
-
+        var icon = globalIcon;
+        io.connect().emit('changeValuePanel', { panelId: globalPanelId, title: title, text: desc, link: link, img: icon});
         $('#modalEditPanel').modal('hide');
     });
 
@@ -177,9 +180,6 @@ $(document).ready(function() {
             senden();
         }
     });
-
-
-
 
     //Logout
     $('#btnLogout').click(function(){
@@ -258,9 +258,11 @@ function editPanel(globalPanelId){
     $('#modalViewPanel').modal('hide');
     var text = $('#text'+globalPanelId);
     var title = $('#header'+globalPanelId);
-
+    var icon = $('#')
+    getImg(globalIcon);
     $('#editPanelTitle').val(title.text());
     $('#editPanelDescription').val(text.html());
+
 
     $('#modalEditPanel').modal('show');
 }
@@ -273,8 +275,13 @@ function deletePanel(panelId) {
 function showPanel(panelID){
     var text = $('#text'+panelID);
     var title = $('#header'+panelID);
+    var icon = $('#image'+panelID);
+    console.log(icon);
+    console.log(icon.className);
+
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());
+
     globalPanelId = panelID;
     $('#modalViewPanel').modal('show');
 }
@@ -288,5 +295,20 @@ function disableControllButtons(){
     $('#btnNewPanel').attr("disabled", true);
     $('#btnAddUserToDashboardModal').attr("disabled", true);
     $('#btnLeaveDashboard').attr('disabled', true);
+}
+function getImg(img){
+
+    globalIcon = img;
+    console.log(globalIcon);
+    $('#setIcon').empty();
+    $('#setEditIcon').empty();
+    $('#setIcon').append(
+        $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
+    )
+    $('#setEditIcon').append(
+        $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
+    )
+
+    return globalIcon;
 }
 
