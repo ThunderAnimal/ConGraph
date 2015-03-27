@@ -258,12 +258,10 @@ function editPanel(globalPanelId){
     $('#modalViewPanel').modal('hide');
     var text = $('#text'+globalPanelId);
     var title = $('#header'+globalPanelId);
-    var icon = $('#')
+    //var icon = $('#')
     getImg(globalIcon);
     $('#editPanelTitle').val(title.text());
     $('#editPanelDescription').val(text.html());
-
-
     $('#modalEditPanel').modal('show');
 }
 
@@ -276,12 +274,10 @@ function showPanel(panelID){
     var text = $('#text'+panelID);
     var title = $('#header'+panelID);
     var icon = $('#image'+panelID);
-    console.log(icon);
-    console.log(icon.className);
-
+    //console.log(icon.attr('src'));
+    getImg(icon.attr('src'));
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());
-
     globalPanelId = panelID;
     $('#modalViewPanel').modal('show');
 }
@@ -297,18 +293,18 @@ function disableControllButtons(){
     $('#btnLeaveDashboard').attr('disabled', true);
 }
 function getImg(img){
-
     globalIcon = img;
-    console.log(globalIcon);
     $('#setIcon').empty();
     $('#setEditIcon').empty();
+    $('#setViewIcon').empty();
     $('#setIcon').append(
         $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
     )
     $('#setEditIcon').append(
         $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
     )
-
-    return globalIcon;
+    $('#setViewIcon').append(
+        $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
+    )
 }
 
