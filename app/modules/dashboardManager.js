@@ -171,8 +171,8 @@ function renderPanelToHtml(id, img, title, content, file, size_y){
                             '<div id="text'+ id + '">' +
                                 content +
                             '</div>' +
-                            '<div id="file'+ id + '" class="hidden">' +
-                                 file +
+                            '<div id="file'+ id + '" data-icon="' + file.icon +'" class="hidden">' +
+                                 file.path +
                             '</div>' +
                         '</div>' +
                     '</div>' +

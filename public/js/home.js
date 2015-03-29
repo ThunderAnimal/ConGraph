@@ -286,7 +286,7 @@ function showPanel(panelID){
     $('#showFile').empty();
     if(file.text() !== 'undefined'){
         $('#showFile').append(
-            $('<a target="_blank" href="' + file.text() + '"> <img src="/img/file.png" width="150px" height="150px"></a>')
+            $('<a target="_blank" href="' + file.text() + '" > <img src="' + file.attr('data-icon') + '" class="img-rounded img-responsive center-block"></a>')
         );
     }
     if(icon.attr('src') === undefined || icon.attr('src') === null){
@@ -297,8 +297,6 @@ function showPanel(panelID){
         $('#setViewIcon').show();
         getImg(icon.attr('src'));
     }
-
-
 
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());

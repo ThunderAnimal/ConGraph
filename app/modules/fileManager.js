@@ -29,6 +29,16 @@ exports.getIconList = function(req, res){
     });
 };
 exports.addFile = function(req, res){
-    var file = "../img/upload/" + req.files.userFile.name;
-    res.end(file);
+    var filePath = "../upload/" + req.files.userFile.name;
+    if(req.files.userFile.mimetype === 'application/pdf'){
+        var fileIcon = "../img/pdf.png";
+    }
+    else if(req.files.userFile.mimetype.indexOf('image') > -1){
+        var fileIcon = filePath;
+    }
+    else{
+        var fileIcon = "../img/file.png";
+    }
+    res.send({path: filePath, icon: fileIcon});
+    res.end(200);
 };

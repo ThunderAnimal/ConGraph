@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-var multer  = require('multer')
+var multer  = require('multer');
 
 var configDB = require('./config/database.js');
 var configServer = require('./config/server.js');
@@ -41,7 +41,7 @@ app.use(cookieParser()); //Read Cookies
 app.use(bodyParser.json()); //get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(multer({
-    dest: './public/img/upload/',
+    dest: './public/upload/',
     rename: function (fieldname, filename) {
         return filename.replace(/\W+/g, '-').toLowerCase() + Date.now()
     },
