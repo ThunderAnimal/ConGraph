@@ -133,7 +133,7 @@ exports.renderDashboardToJson = function(panels){
 
     //columns mit Panels füllen
     for(var i = 0; i < panels.length; i++){
-        panelHtml = renderPanelToHtml( panels[i]._id, panels[i].img, panels[i].name, panels[i].beschreibung, panels[i].file, panels[i].size_y);
+        panelHtml = renderPanelToHtml( panels[i]._id, panels[i].link, panels[i].img, panels[i].name, panels[i].beschreibung, panels[i].file, panels[i].size_y);
         dashboardJson.push({content: panelHtml,
                             col: panels[i].col,
                             row: panels[i].row,
@@ -143,7 +143,7 @@ exports.renderDashboardToJson = function(panels){
     return dashboardJson;
 };
 
-function renderPanelToHtml(id, img, title, content, file, size_y){
+function renderPanelToHtml(id, link, img, title, content, file, size_y){
     var imgSize;
     var divBoxImg;
     var functionText = "showPanel('" + id +"')";
@@ -173,6 +173,9 @@ function renderPanelToHtml(id, img, title, content, file, size_y){
                             '</div>' +
                             '<div id="file'+ id + '" data-icon="' + file.icon +'" class="hidden">' +
                                  file.path +
+                            '</div>' +
+                            '<div id="link'+ id + '" class="hidden">' +
+                                link +
                             '</div>' +
                         '</div>' +
                     '</div>' +

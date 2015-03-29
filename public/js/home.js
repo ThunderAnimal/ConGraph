@@ -265,10 +265,11 @@ function editPanel(globalPanelId){
     $('#modalViewPanel').modal('hide');
     var text = $('#text'+globalPanelId);
     var title = $('#header'+globalPanelId);
-    //var icon = $('#')
+    var link = $('#link'+globalPanelId);
     getImg(globalIcon);
     $('#editPanelTitle').val(title.text());
     $('#editPanelDescription').val(text.html());
+    $('#editPanelLink').val(link.html());
     $('#modalEditPanel').modal('show');
 }
 
@@ -282,6 +283,7 @@ function showPanel(panelID){
     var title = $('#header'+panelID);
     var icon = $('#image'+panelID);
     var file = $('#file'+panelID);
+    var link = $('#link'+panelID);
 
     $('#showFile').empty();
     if(file.text() !== 'undefined'){
@@ -297,10 +299,14 @@ function showPanel(panelID){
         $('#setViewIcon').show();
         getImg(icon.attr('src'));
     }
-
+    $('#viewPanelLink').empty();
+    $('#viewPanelLink').append(
+        $('<a target="_blank" href="' + link.html() + '">' + link.html() + '</a>')
+    )
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());
     globalPanelId = panelID;
+
     $('#modalViewPanel').modal('show');
 }
 function enableControllButtons(){
@@ -336,7 +342,12 @@ function loadUserToDashboard(){
         if (data == "error")
             console.log(data);
         else {
-            console.log(data);
+            $('#loadUserToDashboard').empty();
+            for (var i=0; i< data.length;i++){
+                $('#loadUserToDashboard').append(
+                    $('<div>'+data[i].name+'</div>')
+                )
+            }
         }
 
     });

@@ -107,8 +107,9 @@
                     <span class="input-group-addon" id="sizing-addon1">@</span>
                     <input id="inputUserMail" type="text" class="form-control" placeholder="e-Mail Adresse User" aria-describedby="sizing-addon1">
                 </div>
-                <div>
-
+                <div class="modal-body">
+                    <label>Dashboard User</label>
+                        <div id="loadUserToDashboard"></div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -199,7 +200,7 @@
                         <textarea id="editPanelDescription" rows="10" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1"></textarea>
                     </div>
                     <div class="form-group">
-                        <input id="editPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1">
+                        <input id="editPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1" value="http://">
                     </div>
                     <div class="form-group img">
                         <!--<input id="inputPanelImg" type="text" class="form-control" placeholder="IMG">-->
@@ -231,8 +232,7 @@
                 <div class="form-group">
                     <div class="well" id="viewPanelDescription"></div>
                 </div>
-                <div class="form-group">
-                    <div id="setViewIcon"></div>
+                <div id="viewLink" class="form-group">
                 </div>
                 <div class="form-group">
                     <href id="viewPanelLink" class="form-control" aria-describedby="sizing-addon1"></href>
