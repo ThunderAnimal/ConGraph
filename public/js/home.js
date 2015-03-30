@@ -362,10 +362,13 @@ function loadUserToDashboard(){
             console.log(data);
         else {
             $('#loadUserToDashboard').empty();
+            $('#loadUserToDashboard').append(
+                $('<li class="list-group-item active"> Dashboard User</li>')
+            );
             for (var i=0; i< data.length;i++){
                 $('#loadUserToDashboard').append(
-                    $('<div>'+data[i].name+'</div>')
-                )
+                    $('<li class="list-group-item"><h4 class="list-group-item-heading">' + data[i].name +'</h4><p class="list-group-item-text">' + data[i].email +'</p></li>')
+                );
             }
         }
 
