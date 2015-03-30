@@ -133,7 +133,7 @@ exports.renderDashboardToJson = function(panels){
 
     //columns mit Panels füllen
     for(var i = 0; i < panels.length; i++){
-        panelHtml = renderPanelToHtml( panels[i]._id, panels[i].link, panels[i].img, panels[i].name, panels[i].beschreibung, panels[i].file, panels[i].size_y);
+        panelHtml = renderPanelToHtml( panels[i]._id, panels[i].link, panels[i].img, panels[i].name, panels[i].beschreibung, panels[i].file, panels[i].size_y, panels[i].size_x);
         dashboardJson.push({content: panelHtml,
                             col: panels[i].col,
                             row: panels[i].row,
@@ -143,14 +143,25 @@ exports.renderDashboardToJson = function(panels){
     return dashboardJson;
 };
 
-function renderPanelToHtml(id, link, img, title, content, file, size_y){
+function renderPanelToHtml(id, link, img, title, content, file, size_y, size_x){
     var imgSize;
     var divBoxImg;
+    var textArea = null;
     var functionText = "showPanel('" + id +"')";
-    if(size_y >= 2)
+    if(size_y >= 2){
         imgSize = "box-image-big";
-    else
+    }else{
         imgSize = "box-image-small";
+    }
+    //Überprüfung für TextArea-Style
+    if(size_x == 1 && size_y == 1)
+        textArea = "ta-small";
+    if(size_x == 1 && size_y == 2)
+        textArea = "ta-big";
+    if(size_x == 2 && size_y == 1)
+        textArea = "ta-small-wide";
+    if(size_x == 2 && size_y == 2)
+        textArea = "ta-big-wide";
 
     if(img == '' || img == undefined){
         divBoxImg = ""
@@ -168,9 +179,9 @@ function renderPanelToHtml(id, link, img, title, content, file, size_y){
                             '<h3 id="header' + id + '">' + title + '</h3>' +
                         '</div>' +
                         '<div class="box-content" onclick=' + functionText + '>' +
-                            '<div id="text'+ id + '">' +
+                            '<textarea class=' + textArea+ ' readonly id="text'+ id + '">' +
                                 content +
-                            '</div>' +
+                            '</textarea>' +
                             '<div id="file'+ id + '" data-icon="' + file.icon +'" class="hidden">' +
                                  file.path +
                             '</div>' +

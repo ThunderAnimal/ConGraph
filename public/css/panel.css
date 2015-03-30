@@ -46,7 +46,7 @@
     position: absolute;
 }
 .box-content{
-    padding: 10px;
+    padding: 5px;
     cursor: pointer;
     min-height: 10px;
 }
@@ -61,4 +61,36 @@
 }
 .box-image-big{
     max-height: 250px;
+}
+.ta-small{
+     border: 0;
+     overflow : hidden;
+     height: 25px;
+     width: 187px;
+     resize: none;
+     background-color: transparent;
+}
+.ta-small-wide{
+    border: 0;
+    overflow : hidden;
+    height: 25px;
+    width: 405px;
+    resize: none;
+    background-color: transparent;
+}
+.ta-big{
+    border: 0;
+    overflow : hidden;
+    height: 205px;
+    width: 187px;
+    resize: none;
+    background-color: transparent;
+}
+.ta-big-wide{
+    border: 0;
+    overflow : hidden;
+    height: 95px;
+    width: 405px;
+    resize: none;
+    background-color: transparent;
 }

@@ -19,6 +19,7 @@
     <script src="../js/jquery.form.js"></script>
     <script src="../js/jquery.gridster.min.js"></script>
 
+
 </head>
 <body>
 <header>
@@ -157,7 +158,7 @@
                     <textarea id="inputPanelDescription" rows="10" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1"></textarea>
                 </div>
                 <div class="form-group">
-                    <input id="inputPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1" value="http://">
+                    <input id="inputPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1">
                 </div>
                 <div class="form-group img">
                     <div id="setIcon"></div>
@@ -200,10 +201,9 @@
                         <textarea id="editPanelDescription" rows="10" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1"></textarea>
                     </div>
                     <div class="form-group">
-                        <input id="editPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1" value="http://">
+                        <input id="editPanelLink" type="text" class="form-control" placeholder="URL" aria-describedby="sizing-addon1">
                     </div>
                     <div class="form-group img">
-                        <!--<input id="inputPanelImg" type="text" class="form-control" placeholder="IMG">-->
                         <div id="setEditIcon"></div>
                     </div>
                     <div class="form-group">
@@ -230,12 +230,12 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <div class="well" id="viewPanelDescription"></div>
+                    <!--<div class="well" id="viewPanelDescription"></div>-->
+                    <textarea id="viewPanelDescription" readonly style="cursor: text" rows="10" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1"></textarea>
                 </div>
                 <div id="viewLink" class="form-group">
                 </div>
-                <div class="form-group">
-                    <href id="viewPanelLink" class="form-control" aria-describedby="sizing-addon1"></href>
+                <div id="viewPanelLink" class="form-group">
                 </div>
                 <div id="showFile" class="form-group">
 

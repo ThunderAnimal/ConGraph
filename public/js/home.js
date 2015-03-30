@@ -30,6 +30,7 @@ $(document).ready(function() {
                 size_x: $w.attr('data-sizex'),
                 size_y: $w.attr('data-sizey')
             }
+            console.log( $w.attr('data-sizey'))
         },
         draggable:{
             stop: function(e, ui, $widget){
@@ -50,6 +51,20 @@ $(document).ready(function() {
                 else{
                     $('#image' + id).removeClass('box-image-small').addClass('box-image-big');
                 }
+                //Austausch der TextArea-Styles
+                if($widget.height() == 200 && $widget.width() == 420){
+                    $('#text' + id).removeClass('ta-big ta-big-wide ta-small').addClass('ta-small-wide');
+                }
+                if($widget.height() ==200 && $widget.width() == 200){
+                    $('#text' + id).removeClass('ta-big ta-small-wide ta-big-wide').addClass('ta-small');
+                }
+                if($widget.height() == 420 && $widget.width() == 420){
+                    $('#text' + id).removeClass('ta-big ta-small-wide ta-small').addClass('ta-big-wide');
+                }
+                if($widget.height() == 420 && $widget.width() == 200){
+                    $('#text' + id).removeClass('ta-big-wide ta-small ta-small-wide').addClass('ta-big');
+                }
+
                 var s = gridster.serialize_changed();
                 s = JSON.stringify(s);
                 io.connect().emit('changePositionPanel', { serialize: s});
@@ -299,10 +314,14 @@ function showPanel(panelID){
         $('#setViewIcon').show();
         getImg(icon.attr('src'));
     }
-    $('#viewPanelLink').empty();
-    $('#viewPanelLink').append(
-        $('<a target="_blank" href="' + link.html() + '">' + link.html() + '</a>')
-    )
+    if(link.html()=== undefined || link.html() === null){
+        $('#viewPanelLink').hide();
+    }else{
+        $('#viewPanelLink').empty();
+        $('#viewPanelLink').append(
+            $('<a target="_blank" href="' + link.html() + '">' + link.html() + '</a>')
+        )
+    }
     $('#viewPanelLabel').text(title.text());
     $('#viewPanelDescription').text(text.html());
     globalPanelId = panelID;
