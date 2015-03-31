@@ -49,7 +49,7 @@
                     <!--Content Load Dynamik-->
                 </ul>
             </span>
-            <button type="button" class="btnM btnR" name="myaccount" value="my account" onclick="alert('Das bin ich.');">
+            <button type="button" class="btnM btnR" name="myaccount" value="my account" onclick="alert('Thats me');">
                 my account</button>
         </nav>
     </div>
@@ -73,7 +73,7 @@
                 <ul id="content" style="padding-left: 0;"></ul>
                 <br>
             </div>
-            <input id="text" name="Eingabe" type="text" size="20" placeholder="schreibe etwas...">
+            <input id="text" name="Eingabe" type="text" size="20" placeholder="your message...">
             <button id="senden" type="submit" class="btnM" name="addpanel" value="senden">
                 <span class="glyphicon glyphicon-ok" style="font-size: smaller;" aria-hidden="true"></span>
             </button>
@@ -108,12 +108,12 @@
                 <br>
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon" id="sizing-addon1">@</span>
-                    <input id="inputUserMail" type="text" class="form-control" placeholder="e-Mail Adresse User" aria-describedby="sizing-addon1">
+                    <input id="inputUserMail" type="text" class="form-control" placeholder="e-Mail Address" aria-describedby="sizing-addon1">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="btnAddUserToDashboard">Add User</button>
+                <button type="button" class="btnM" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btnM" id="btnAddUserToDashboard">Add User</button>
             </div>
         </div>
     </div>
@@ -133,8 +133,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="btnAddDashboard">Add Dashboard</button>
+                <button type="button" class="btnM" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btnM" id="btnAddDashboard">Add Dashboard</button>
             </div>
         </div>
     </div>
@@ -177,7 +177,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btnM" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="btnAddPanel">Add Panel</button>
+                <button type="button" class="btnM" id="btnAddPanel">Add Panel</button>
             </div>
         </div>
     </div>
@@ -204,16 +204,13 @@
                     <div class="form-group img">
                         <div id="setEditIcon"></div>
                     </div>
-                    <div class="form-group">
-                        <input id="editPanelFile" name="test" type="file" class="form-control">
-                    </div>
                     <div class="form-group img" id="setEditImages">
                         <!--Content Load Dynamik-->
                     </div>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btnM" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btnM" id="btnEditPanel">Save</button>
+                <button type="button" class="btnM" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btnM" id="btnEditPanel">Save</button>
             </div>
         </div>
     </div>
@@ -228,7 +225,6 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <!--<div class="well" id="viewPanelDescription"></div>-->
                     <textarea id="viewPanelDescription" readonly style="cursor: text" rows="10" class="form-control" placeholder="Panel Description" aria-describedby="sizing-addon1"></textarea>
                 </div>
                 <div id="viewLink" class="form-group">
@@ -236,14 +232,13 @@
                 <div id="viewPanelLink" class="form-group">
                 </div>
                 <div id="showFile" class="form-group">
-
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="btnDeletePanel">
+                <button type="button" class="btnM" id="btnDeletePanel">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="btn btn-default" id="btnEditPanel" onclick="editPanel(globalPanelId)">
+                <button type="button" class="btnM" id="btnEditPanel" onclick="editPanel(globalPanelId)">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
             </div>

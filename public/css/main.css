@@ -232,16 +232,6 @@ footer {
     margin: 5px 5px 5px 0px;
     text-align: center;
 }
-/*div.img {
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid #0000ff;
-    height: auto;
-    width: auto;
-    float: left;
-    text-align: center;
-}
-*/
 div.img img {
     display: inline;
     margin: 5px;
@@ -250,5 +240,5 @@ div.img img {
 
 div.img a:hover img {
     border:2px solid #0000ff;
-
 }
+

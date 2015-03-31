@@ -30,7 +30,6 @@ $(document).ready(function() {
                 size_x: $w.attr('data-sizex'),
                 size_y: $w.attr('data-sizey')
             }
-            console.log( $w.attr('data-sizey'))
         },
         draggable:{
             stop: function(e, ui, $widget){
@@ -139,14 +138,14 @@ $(document).ready(function() {
         var userMail = $('#inputUserMail').val();
         var dashboardId = globalDashBoardId;
         if(dashboardId === undefined || dashboardId === null){
-            alert("In keinen Dashboard!");
+            alert("In keinem Dashboard!");
             return;
         }
         $.post('../addUserToDashboard',{dashboardId: dashboardId, userMail:userMail}, function(data){
             if(data !== 'success'){
                 alert(data);
             }else{
-                alert("Nutzer Erfolgreich hinzugefügt!");
+                alert("User successfully added!");
                 $('#modalAddUserToDashboard').modal('hide');
             }
         });
@@ -363,7 +362,7 @@ function loadUserToDashboard(){
         else {
             $('#loadUserToDashboard').empty();
             $('#loadUserToDashboard').append(
-                $('<li class="list-group-item active"> Dashboard User</li>')
+                $('<li class="list-group-item active" style="background-color: #28697d;"> Dashboard User</li>')
             );
             for (var i=0; i< data.length;i++){
                 $('#loadUserToDashboard').append(

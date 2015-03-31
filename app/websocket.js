@@ -20,7 +20,7 @@ module.exports = function(io){
 
             //Client jon Room Clients
             socket.join(userid);
-            socket.emit('chat', { zeit: new Date(), text: 'Du bist nun mit dem Server verbunden!' });
+            socket.emit('chat', { zeit: new Date(), text: 'You are now connected...' });
 
 
         });
