@@ -284,7 +284,8 @@ function editPanel(globalPanelId){
     $('#editPanelTitle').val(title.text());
     $('#editPanelDescription').val(text.html());
     $('#editPanelLink').val(link.html());
-    $('#modalEditPanel').modal('show');
+    setTimeout(function(){$('#modalEditPanel').modal('show');}, 500);
+
 }
 
 function deletePanel(panelId) {
