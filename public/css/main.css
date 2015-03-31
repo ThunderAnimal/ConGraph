@@ -235,10 +235,9 @@ footer {
 div.img img {
     display: inline;
     margin: 5px;
-    border: 3px solid #ffffff;
 }
 
 div.img a:hover img {
-    border:2px solid #0000ff;
+    border:2px solid #ffffff;
 }
 

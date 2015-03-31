@@ -318,7 +318,7 @@ function showPanel(panelID){
     }else{
         $('#viewPanelLink').empty();
         $('#viewPanelLink').append(
-            $('<a target="_blank" href="' + link.html() + '">' + link.html() + '</a>')
+            $('<a target="_blank" style="color: #ffffff" href="' + link.html() + '">' + link.html() + '</a>')
         )
     }
     $('#viewPanelLabel').text(title.text());
@@ -345,13 +345,13 @@ function getImg(img){
     $('#setEditIcon').empty();
     $('#setViewIcon').empty();
     $('#setIcon').append(
-        $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
+        $('<a><img src="'+globalIcon+'"width="40px" height="40px" style="border: 0px"></a>')
     )
     $('#setEditIcon').append(
-        $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
+        $('<a><img src="'+globalIcon+'"width="40px" height="40px" style="border: 0px"></a>')
     )
     $('#setViewIcon').append(
-        $('<a><img src="'+globalIcon+'"width="40px" height="40px"></a>')
+        $('<a><img src="'+globalIcon+'"width="40px" height="40px" style="border: 0px"></a>')
     )
 }
 
@@ -362,7 +362,7 @@ function loadUserToDashboard(){
         else {
             $('#loadUserToDashboard').empty();
             $('#loadUserToDashboard').append(
-                $('<li class="list-group-item active" style="background-color: #28697d;"> Dashboard User</li>')
+                $('<li class="list-group-item active"> Dashboard User</li>')
             );
             for (var i=0; i< data.length;i++){
                 $('#loadUserToDashboard').append(
