@@ -5,7 +5,7 @@
 module.exports = {
     service: 'Gmail',
     auth: {
-        user: 'martinweber.9393@gmail.com',
-        pass: 'muhkuh6043'
+        user: 'congraph0@gmail.com',
+        pass: '1234Test'
     }
 }
